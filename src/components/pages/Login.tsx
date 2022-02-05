@@ -1,7 +1,7 @@
 import { VFC } from 'react';
 import { css } from '@emotion/react';
 import { Button } from '@chakra-ui/react';
-// import { FcGoogle } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc';
 
 export const Login: VFC = () => {
   return (
@@ -56,7 +56,18 @@ export const Login: VFC = () => {
             css={content__image}
           />
         </div>
-        <Button leftIcon={<FcGoogle />}>Googleでログイン</Button>
+        <Button
+          leftIcon={<FcGoogle size={18} />}
+          boxShadow="md"
+          bgColor="white"
+          color="blackAlpha.700"
+          fontFamily="Roboto"
+          fontSize={14}
+          px={8}
+          py={6}
+        >
+          Googleでログイン
+        </Button>
       </div>
     </div>
   );
