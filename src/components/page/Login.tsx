@@ -7,7 +7,7 @@ import firebase from 'firebase/app';
 import { auth } from '../../firebase';
 import { useMessage } from '../../hooks/useMessage';
 
-export const Login: VFC = () => {
+export const LoginPage: VFC = () => {
   const router = useRouter();
   const { openMessage } = useMessage();
 

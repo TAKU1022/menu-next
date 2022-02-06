@@ -1,12 +1,12 @@
 import type { NextPage } from 'next';
-import { Home } from '../components/pages/Home';
+import { HomePage } from '../components/page/Home';
 
-const HomePage: NextPage = () => {
+const Home: NextPage = () => {
   return (
     <div>
-      <Home />
+      <HomePage />
     </div>
   );
 };
 
-export default HomePage;
+export default Home;
