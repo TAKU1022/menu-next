@@ -1,9 +1,35 @@
+import { useRouter } from 'next/router';
 import { VFC } from 'react';
 import { css } from '@emotion/react';
 import { Button } from '@chakra-ui/react';
 import { FcGoogle } from 'react-icons/fc';
+import firebase from 'firebase/app';
+import { auth } from '../../firebase';
+import { useMessage } from '../../hooks/useMessage';
 
 export const Login: VFC = () => {
+  const router = useRouter();
+  const { openMessage } = useMessage();
+
+  const onClickLoginButton = () => {
+    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+    googleAuthProvider.setCustomParameters({ prompt: 'select_account' });
+    auth
+      .signInWithPopup(googleAuthProvider)
+      .then((result) => {
+        if (result.additionalUserInfo?.isNewUser) {
+          router.push('/my-menu-loading');
+          openMessage('アカウントが作成されました！', 'success');
+        } else {
+          router.push('/');
+          openMessage('おかえりなさい！', 'success');
+        }
+      })
+      .catch(() => {
+        openMessage('ログインに失敗しました', 'error');
+      });
+  };
+
   return (
     <div css={dotBackground}>
       <div css={mv}>
@@ -65,6 +91,7 @@ export const Login: VFC = () => {
           fontSize={14}
           px={8}
           py={6}
+          onClick={onClickLoginButton}
         >
           Googleでログイン
         </Button>
@@ -192,21 +219,4 @@ const content__image = css`
   @media screen and (max-width: 400px) {
     width: 80%;
   }
-`;
-
-const content__button = css`
-  height: 44px;
-  padding: 0 24px;
-`;
-
-const content__icon = css`
-  height: 18px;
-  margin-right: 8px;
-`;
-
-const content__text = css`
-  color: rgba(black, 0.6);
-  font-size: 14px;
-  font-weight: bold;
-  font-family: 'Roboto', arial, sans-serif;
 `;
