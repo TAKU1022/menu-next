@@ -3,7 +3,7 @@ export type User = {
   name?: string;
   avaterURL?: string;
   email?: string;
-  createdAt: Date;
+  createdAt?: Date;
   admin: boolean;
   eatCount: number;
   isEatenBreakfast: boolean;
