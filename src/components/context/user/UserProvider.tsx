@@ -1,5 +1,5 @@
 import { createContext, Dispatch, ReactNode, useReducer, VFC } from 'react';
-import { User } from '../../../types/user';
+import { User } from '@/types/user';
 import { UserAction, userReducer } from './reducer';
 
 type Context = {
@@ -13,7 +13,7 @@ type Props = {
 
 export const UserContext = createContext<Context | undefined>(undefined);
 
-const initialState = {
+export const initialUserState = {
   uid: '',
   name: '',
   avaterURL: '',
@@ -31,7 +31,7 @@ const initialState = {
 };
 
 export const UserProvider: VFC<Props> = ({ children }) => {
-  const [userState, dispatch] = useReducer(userReducer, initialState);
+  const [userState, dispatch] = useReducer(userReducer, initialUserState);
 
   return (
     <UserContext.Provider value={{ userState, dispatch }}>

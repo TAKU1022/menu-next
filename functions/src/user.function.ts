@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { User } from '@/types/user';
 admin.initializeApp();
 
 const db = admin.firestore();
@@ -8,7 +9,7 @@ export const createUser = functions
   .region('asia-northeast1')
   .auth.user()
   .onCreate((user) => {
-    return db.doc(`users/${user.uid}`).set({
+    const userData: User = {
       uid: user.uid,
       name: user.displayName,
       avaterURL: user.photoURL,
@@ -23,5 +24,6 @@ export const createUser = functions
       isCompletedHomeTutorial: false,
       isCreatedMyMenu: false,
       postCount: 0,
-    });
+    };
+    return db.doc(`users/${user.uid}`).set({ ...userData });
   });

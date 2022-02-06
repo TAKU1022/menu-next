@@ -1,8 +1,8 @@
 export type User = {
   uid: string;
-  name: string;
-  avaterURL: string;
-  email: string;
+  name?: string;
+  avaterURL?: string;
+  email?: string;
   createdAt: Date;
   admin: boolean;
   eatCount: number;
