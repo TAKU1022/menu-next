@@ -1,6 +1,6 @@
 import { User } from '@/types/user';
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { UserContext } from 'src/components/context/user/UserProvider';
 import { auth, db } from 'src/firebase';
 
@@ -14,7 +14,7 @@ export const useUser = () => {
   const { userState, dispatch } = context;
   const router = useRouter();
 
-  const listenUserState = () => {
+  const listenUserState = useCallback(() => {
     return auth.onAuthStateChanged((user) => {
       if (user) {
         const uid = user.uid;
@@ -29,9 +29,10 @@ export const useUser = () => {
         router.push('/login');
       }
     });
-  };
+  }, [router, dispatch]);
 
   return {
+    userState,
     listenUserState,
   };
 };
