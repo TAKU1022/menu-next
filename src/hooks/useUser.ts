@@ -23,10 +23,10 @@ export const useUser = () => {
           .get()
           .then((snapshot) => {
             const data = snapshot.data() as User;
-            dispatch({ type: 'LOGIN', payload: data });
+            dispatch({ type: 'SIGN_IN', payload: data });
           });
       } else {
-        router.push('/login');
+        router.push('/sign_in');
       }
     });
   }, [router, dispatch]);

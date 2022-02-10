@@ -11,7 +11,7 @@ export const SignInPage: VFC = () => {
   const router = useRouter();
   const { openMessage } = useMessage();
 
-  const onClickLoginButton = () => {
+  const onClickSignInButton = () => {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
     googleAuthProvider.setCustomParameters({ prompt: 'select_account' });
     auth
@@ -91,7 +91,7 @@ export const SignInPage: VFC = () => {
           fontSize={14}
           px={8}
           py={6}
-          onClick={onClickLoginButton}
+          onClick={onClickSignInButton}
         >
           Googleでログイン
         </Button>
