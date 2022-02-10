@@ -26,7 +26,7 @@ export const useUser = () => {
             dispatch({ type: 'SIGN_IN', payload: data });
           });
       } else {
-        router.push('/sign_in');
+        router.push('/signin');
       }
     });
   }, [router, dispatch]);
