@@ -39,6 +39,7 @@ export const CommonFooter: VFC = () => {
 const footer = css`
   color: #fff;
   background-color: #755732;
+  font-weight: 500;
   padding: 24px 32px;
 `;
 
