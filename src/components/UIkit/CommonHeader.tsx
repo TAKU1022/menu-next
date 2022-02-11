@@ -10,7 +10,7 @@ import {
   SkeletonCircle,
 } from '@chakra-ui/react';
 
-export const Header: VFC = () => {
+export const CommonHeader: VFC = () => {
   const { userState } = useUser();
 
   return (

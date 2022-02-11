@@ -1,6 +1,6 @@
 import { ReactNode, VFC } from 'react';
 import { AuthGuard } from '../functional/AuthGuard';
-import { Header } from '../UIkit/CommonHeader';
+import { CommonHeader } from '../UIkit/CommonHeader';
 
 type Props = {
   children: ReactNode;
@@ -9,7 +9,7 @@ type Props = {
 export const CommonLayout: VFC<Props> = ({ children }) => {
   return (
     <AuthGuard>
-      <Header />
+      <CommonHeader />
       <main>{children}</main>
     </AuthGuard>
   );
