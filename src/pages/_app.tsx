@@ -8,6 +8,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       global: {
         'html, body': {
           height: '100%',
+          fontFamily:
+            "'M PLUS Rounded 1c', Roboto, 'Helvetica Neue', sans-serif",
         },
         li: {
           listStyle: 'none',
