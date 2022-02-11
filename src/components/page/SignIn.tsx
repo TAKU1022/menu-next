@@ -17,11 +17,10 @@ export const SignInPage: VFC = () => {
     auth
       .signInWithPopup(googleAuthProvider)
       .then((result) => {
+        router.push('/');
         if (result.additionalUserInfo?.isNewUser) {
-          router.push('/my-menu-loading');
           openMessage('アカウントが作成されました！', 'success');
         } else {
-          router.push('/');
           openMessage('おかえりなさい！', 'success');
         }
       })
