@@ -7,21 +7,20 @@ import firebase from 'firebase/app';
 import { auth } from '../../firebase';
 import { useMessage } from '../../hooks/useMessage';
 
-export const LoginPage: VFC = () => {
+export const SignInPage: VFC = () => {
   const router = useRouter();
   const { openMessage } = useMessage();
 
-  const onClickLoginButton = () => {
+  const onClickSignInButton = () => {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
     googleAuthProvider.setCustomParameters({ prompt: 'select_account' });
     auth
       .signInWithPopup(googleAuthProvider)
       .then((result) => {
+        router.push('/');
         if (result.additionalUserInfo?.isNewUser) {
-          router.push('/my-menu-loading');
           openMessage('アカウントが作成されました！', 'success');
         } else {
-          router.push('/');
           openMessage('おかえりなさい！', 'success');
         }
       })
@@ -91,7 +90,7 @@ export const LoginPage: VFC = () => {
           fontSize={14}
           px={8}
           py={6}
-          onClick={onClickLoginButton}
+          onClick={onClickSignInButton}
         >
           Googleでログイン
         </Button>
