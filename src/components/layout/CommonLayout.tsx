@@ -1,6 +1,6 @@
 import { ReactNode, VFC } from 'react';
 import { AuthGuard } from '../functional/AuthGuard';
-import { Header } from '../UIkit/Header';
+import { Header } from '../UIkit/CommonHeader';
 
 type Props = {
   children: ReactNode;
