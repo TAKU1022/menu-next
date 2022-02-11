@@ -9,6 +9,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         'html, body': {
           height: '100%',
         },
+        li: {
+          listStyle: 'none',
+        },
       },
     },
   });
