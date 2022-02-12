@@ -72,7 +72,7 @@ export const CommonHeader: VFC = () => {
                 )}
               </MenuButton>
               <MenuList>
-                <MenuItem>
+                <MenuItem py={3}>
                   <img
                     css={menuIcon}
                     src="/images/icons/mypage-icon.png"
@@ -80,7 +80,7 @@ export const CommonHeader: VFC = () => {
                   />
                   <span css={menuText}>マイページ</span>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem py={3}>
                   <img
                     css={menuIconEdit}
                     src="/images/icons/edit-icon.png"
@@ -88,7 +88,7 @@ export const CommonHeader: VFC = () => {
                   />
                   <span css={menuText}>My献立を編集</span>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem py={3}>
                   <img
                     css={menuIcon}
                     src="/images/icons/setting-icon.png"
@@ -96,7 +96,7 @@ export const CommonHeader: VFC = () => {
                   />
                   <span css={menuText}>設定</span>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem py={3}>
                   <img
                     css={menuIcon}
                     src="/images/icons/logout-icon.png"
