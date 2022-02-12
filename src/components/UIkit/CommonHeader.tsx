@@ -1,7 +1,9 @@
 import { VFC } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
 import { useUser } from 'src/hooks/useUser';
+import { useAuth } from 'src/hooks/useAuth';
 import {
   Menu,
   MenuButton,
@@ -11,7 +13,13 @@ import {
 } from '@chakra-ui/react';
 
 export const CommonHeader: VFC = () => {
+  const router = useRouter();
   const { userState } = useUser();
+  const { signOut } = useAuth();
+
+  const navigatePage = (path: string) => {
+    router.push(path);
+  };
 
   return (
     <header css={header}>
@@ -72,7 +80,7 @@ export const CommonHeader: VFC = () => {
                 )}
               </MenuButton>
               <MenuList>
-                <MenuItem py={3}>
+                <MenuItem py={3} onClick={() => navigatePage('/my_page')}>
                   <img
                     css={menuIcon}
                     src="/images/icons/mypage-icon.png"
@@ -80,7 +88,7 @@ export const CommonHeader: VFC = () => {
                   />
                   <span css={menuText}>マイページ</span>
                 </MenuItem>
-                <MenuItem py={3}>
+                <MenuItem py={3} onClick={() => navigatePage('/edit_my_menu')}>
                   <img
                     css={menuIconEdit}
                     src="/images/icons/edit-icon.png"
@@ -88,7 +96,10 @@ export const CommonHeader: VFC = () => {
                   />
                   <span css={menuText}>My献立を編集</span>
                 </MenuItem>
-                <MenuItem py={3}>
+                <MenuItem
+                  py={3}
+                  onClick={() => navigatePage('/setting/account')}
+                >
                   <img
                     css={menuIcon}
                     src="/images/icons/setting-icon.png"
@@ -96,7 +107,7 @@ export const CommonHeader: VFC = () => {
                   />
                   <span css={menuText}>設定</span>
                 </MenuItem>
-                <MenuItem py={3}>
+                <MenuItem py={3} onClick={signOut}>
                   <img
                     css={menuIcon}
                     src="/images/icons/logout-icon.png"

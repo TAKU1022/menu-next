@@ -25,7 +25,15 @@ export const useAuth = () => {
       });
   };
 
+  const signOut = () => {
+    auth.signOut().then(() => {
+      router.push('/sign_in');
+      openMessage('またお越しください！', 'success');
+    });
+  };
+
   return {
     signInWithGoogle,
+    signOut,
   };
 };
