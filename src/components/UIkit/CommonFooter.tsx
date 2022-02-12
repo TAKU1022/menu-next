@@ -8,12 +8,12 @@ export const CommonFooter: VFC = () => {
       <div css={footer__inner}>
         <ul css={list}>
           <li css={list__item}>
-            <Link href={'/terms'}>
+            <Link href={'/terms'} passHref>
               <a css={list__link}>利用規約</a>
             </Link>
           </li>
           <li css={list__item}>
-            <Link href={'/privacy'}>
+            <Link href={'/privacy'} passHref>
               <a css={list__link}>プライバシーポリシー</a>
             </Link>
           </li>
