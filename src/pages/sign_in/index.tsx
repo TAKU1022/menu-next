@@ -1,4 +1,4 @@
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 import { SignInPage } from 'src/components/page/SignInPage';
 
 const Login: NextPage = () => {
