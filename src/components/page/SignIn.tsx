@@ -1,32 +1,14 @@
-import { useRouter } from 'next/router';
 import { VFC } from 'react';
 import { css } from '@emotion/react';
 import { Button } from '@chakra-ui/react';
 import { FcGoogle } from 'react-icons/fc';
-import firebase from 'firebase/app';
-import { auth } from '../../firebase';
-import { useMessage } from '../../hooks/useMessage';
+import { useAuth } from 'src/hooks/useAuth';
 
 export const SignInPage: VFC = () => {
-  const router = useRouter();
-  const { openMessage } = useMessage();
+  const { signInWithGoogle } = useAuth();
 
   const onClickSignInButton = () => {
-    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-    googleAuthProvider.setCustomParameters({ prompt: 'select_account' });
-    auth
-      .signInWithPopup(googleAuthProvider)
-      .then((result) => {
-        router.push('/');
-        if (result.additionalUserInfo?.isNewUser) {
-          openMessage('アカウントが作成されました！', 'success');
-        } else {
-          openMessage('おかえりなさい！', 'success');
-        }
-      })
-      .catch(() => {
-        openMessage('ログインに失敗しました', 'error');
-      });
+    signInWithGoogle();
   };
 
   return (
