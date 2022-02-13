@@ -1,4 +1,4 @@
-import { User } from '@/types/user';
+import { User } from '@/types/typeUser';
 import { useRouter } from 'next/router';
 import { useCallback, useContext } from 'react';
 import { UserContext } from 'src/components/context/user/UserProvider';

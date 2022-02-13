@@ -1,5 +1,5 @@
 import { createContext, Dispatch, ReactNode, useReducer, VFC } from 'react';
-import { User } from '@/types/user';
+import { User } from '@/types/typeUser';
 import { UserAction, userReducer } from './reducer';
 
 type Context = {

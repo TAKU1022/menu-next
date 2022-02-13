@@ -1,7 +1,10 @@
 import { VFC } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
+import { rgba } from 'emotion-rgba';
 import { useUser } from 'src/hooks/useUser';
+import { useAuth } from 'src/hooks/useAuth';
 import {
   Menu,
   MenuButton,
@@ -11,7 +14,13 @@ import {
 } from '@chakra-ui/react';
 
 export const CommonHeader: VFC = () => {
+  const router = useRouter();
   const { userState } = useUser();
+  const { signOut } = useAuth();
+
+  const navigatePage = (path: string) => {
+    router.push(path);
+  };
 
   return (
     <header css={header}>
@@ -72,7 +81,7 @@ export const CommonHeader: VFC = () => {
                 )}
               </MenuButton>
               <MenuList>
-                <MenuItem>
+                <MenuItem py={3} onClick={() => navigatePage('/my_page')}>
                   <img
                     css={menuIcon}
                     src="/images/icons/mypage-icon.png"
@@ -80,7 +89,7 @@ export const CommonHeader: VFC = () => {
                   />
                   <span css={menuText}>マイページ</span>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem py={3} onClick={() => navigatePage('/edit_my_menu')}>
                   <img
                     css={menuIconEdit}
                     src="/images/icons/edit-icon.png"
@@ -88,7 +97,10 @@ export const CommonHeader: VFC = () => {
                   />
                   <span css={menuText}>My献立を編集</span>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem
+                  py={3}
+                  onClick={() => navigatePage('/setting/account')}
+                >
                   <img
                     css={menuIcon}
                     src="/images/icons/setting-icon.png"
@@ -96,7 +108,7 @@ export const CommonHeader: VFC = () => {
                   />
                   <span css={menuText}>設定</span>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem py={3} onClick={signOut}>
                   <img
                     css={menuIcon}
                     src="/images/icons/logout-icon.png"
@@ -253,7 +265,7 @@ const userAvatarContent = css`
   height: 55px;
   position: relative;
   border-radius: 50%;
-  box-shadow: 3px 2px 0 0 rgba(black, 0.3);
+  box-shadow: 3px 2px 0 0 ${rgba('#000', 0.3)};
   @media screen and (max-width: 750px) {
     width: 42px;
     height: 44px;
