@@ -1,5 +1,5 @@
 import { VFC } from 'react';
-import { css, SerializedStyles } from '@emotion/react';
+import { css } from '@emotion/react';
 import { rgba } from 'emotion-rgba';
 import { FoodCard } from '@/types/typeFood';
 import Link from 'next/link';
