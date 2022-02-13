@@ -20,17 +20,18 @@ const foodConverter = {
   },
 };
 
-export const fetchFoodList = async (food: Food | undefined) => {
+export const fetchFoodList = async (currentPage: number) => {
+  const perPage = 24;
   const ref = db.collection('foods').withConverter(foodConverter);
-  const snapshot = food
-    ? await ref.startAfter(food).limit(24).get()
-    : await ref.limit(12).get({ source: 'server' });
+  const snapshot = await ref
+    .orderBy('categoryId')
+    .startAfter(currentPage)
+    .limit(perPage)
+    .get({ source: 'server' });
 
   const foodList = snapshot.docs.map((food) => food.data());
-  const lastFood = foodList[foodList.length - 1];
 
   return {
     foodList,
-    lastFood,
   };
 };
