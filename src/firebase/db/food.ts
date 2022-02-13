@@ -34,8 +34,8 @@ export const fetchFoodList = async (foodId: string | undefined) => {
   const snapshot = foodId
     ? await ref
         .orderBy('foodId')
-        .limit(perPage)
         .startAfter(foodId)
+        .limit(perPage)
         .get({ source: 'server' })
     : await ref.orderBy('foodId').limit(perPage).get({ source: 'server' });
 

@@ -1,4 +1,4 @@
-import { useState, VFC } from 'react';
+import { useEffect, useState, VFC } from 'react';
 import { css } from '@emotion/react';
 import { Container } from '../UIkit/Container';
 import { WoodBackground } from '../UIkit/WoodBackground';
@@ -37,9 +37,11 @@ export const FoodListPage: VFC<Props> = ({ foodList, lastFoodId }) => {
               <FoodPhotoCard key={foodCard.data.foodId} foodCard={foodCard} />
             ))}
           </div>
-          <Button mt={8} onClick={onClickMoreButton}>
-            もっとみる
-          </Button>
+          {foodId && (
+            <Button mt={8} onClick={onClickMoreButton}>
+              もっとみる
+            </Button>
+          )}
         </div>
       </WoodBackground>
     </Container>
