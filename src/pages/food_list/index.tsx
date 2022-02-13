@@ -6,21 +6,22 @@ import { fetchFoodList } from 'src/firebase/db/food';
 
 type Props = {
   foodList: FoodCard[];
+  lastFoodId: string;
 };
 
-const FoodList: NextPage<Props> = ({ foodList }) => {
+const FoodList: NextPage<Props> = ({ foodList, lastFoodId }) => {
   return (
     <CommonLayout>
-      <FoodListPage foodList={foodList} />
+      <FoodListPage foodList={foodList} lastFoodId={lastFoodId} />
     </CommonLayout>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const foodList = await fetchFoodList(0);
+  const { foodCardList, lastFoodId } = await fetchFoodList(undefined);
 
   return {
-    props: { foodList },
+    props: { foodList: foodCardList, lastFoodId },
   };
 };
 

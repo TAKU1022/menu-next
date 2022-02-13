@@ -4,13 +4,24 @@ import { Container } from '../UIkit/Container';
 import { WoodBackground } from '../UIkit/WoodBackground';
 import { FoodCard } from '@/types/typeFood';
 import { FoodPhotoCard } from '../UIkit/FoodPhotoCard';
+import { fetchFoodList } from 'src/firebase/db/food';
+import { Button } from '@chakra-ui/react';
 
 type Props = {
   foodList: FoodCard[];
+  lastFoodId: string;
 };
 
-export const FoodListPage: VFC<Props> = ({ foodList }) => {
+export const FoodListPage: VFC<Props> = ({ foodList, lastFoodId }) => {
   const [foodCards, updateFoodCards] = useState<FoodCard[]>(foodList);
+  const [foodId, updateFoodId] = useState<string>(lastFoodId);
+
+  const onClickMoreButton = () => {
+    fetchFoodList(foodId).then((data) => {
+      updateFoodCards((prevState) => [...prevState, ...data.foodCardList]);
+      updateFoodId(data.lastFoodId);
+    });
+  };
 
   return (
     <Container>
@@ -26,6 +37,9 @@ export const FoodListPage: VFC<Props> = ({ foodList }) => {
               <FoodPhotoCard key={foodCard.data.foodId} foodCard={foodCard} />
             ))}
           </div>
+          <Button mt={8} onClick={onClickMoreButton}>
+            もっとみる
+          </Button>
         </div>
       </WoodBackground>
     </Container>
