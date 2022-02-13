@@ -2,15 +2,15 @@ import { useState, VFC } from 'react';
 import { css } from '@emotion/react';
 import { Container } from '../UIkit/Container';
 import { WoodBackground } from '../UIkit/WoodBackground';
-import { Food } from '@/types/typeFood';
-import { FoodCard } from '../UIkit/FoodCard';
+import { FoodCard } from '@/types/typeFood';
+import { FoodPhotoCard } from '../UIkit/FoodPhotoCard';
 
 type Props = {
-  foodList: Food[];
+  foodList: FoodCard[];
 };
 
 export const FoodListPage: VFC<Props> = ({ foodList }) => {
-  const [foods, updateFoods] = useState<Food[]>(foodList);
+  const [foodCards, updateFoodCards] = useState<FoodCard[]>(foodList);
 
   return (
     <Container>
@@ -22,8 +22,8 @@ export const FoodListPage: VFC<Props> = ({ foodList }) => {
             alt="メニュー一覧"
           />
           <div css={grid}>
-            {foods.map((food) => (
-              <FoodCard key={food.foodId} foodData={food} />
+            {foodCards.map((foodCard) => (
+              <FoodPhotoCard key={foodCard.data.foodId} foodCard={foodCard} />
             ))}
           </div>
         </div>

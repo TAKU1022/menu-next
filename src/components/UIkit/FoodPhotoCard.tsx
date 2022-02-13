@@ -1,24 +1,26 @@
 import { VFC } from 'react';
-import { css } from '@emotion/react';
+import { css, SerializedStyles } from '@emotion/react';
 import { rgba } from 'emotion-rgba';
-import { Food } from '@/types/typeFood';
+import { FoodCard } from '@/types/typeFood';
 import Link from 'next/link';
 
 type Props = {
-  foodData: Food;
+  foodCard: FoodCard;
 };
 
-export const FoodCard: VFC<Props> = ({ foodData }) => {
+export const FoodPhotoCard: VFC<Props> = ({ foodCard }) => {
+  const rotateId: keyof typeof rootType = foodCard.rotateType.rotateId;
+
   return (
-    <div css={root}>
-      <Link href={`/food_list/${foodData.foodId}`}>
+    <div css={rootType[rotateId]}>
+      <Link href={`/food_list/${foodCard.data.foodId}`}>
         <a css={food}>
           <img css={food__pin} src={'/images/others/pin-red.png'} alt="" />
           <div
             css={food__image}
-            style={{ backgroundImage: `url(${foodData.image})` }}
+            style={{ backgroundImage: `url(${foodCard.data.image})` }}
           ></div>
-          <p css={food__name}>{foodData.name}</p>
+          <p css={food__name}>{foodCard.data.name}</p>
         </a>
       </Link>
     </div>
@@ -52,53 +54,55 @@ const root = css`
   }
 `;
 
-const root_type_a = css`
-  ${root}
-  transform: rotate(-2deg);
-  &:hover {
-    transform: rotate(-2deg) translateY(-5px);
-  }
-`;
+const rootType = {
+  a: css`
+    ${root}
+    transform: rotate(-2deg);
+    &:hover {
+      transform: rotate(-2deg) translateY(-5px);
+    }
+  `,
 
-const root_type_b = css`
-  ${root}
-  transform: rotate(-3deg);
-  &:hover {
-    transform: rotate(-3deg) translateY(-5px);
-  }
-`;
+  b: css`
+    ${root}
+    transform: rotate(-3deg);
+    &:hover {
+      transform: rotate(-3deg) translateY(-5px);
+    }
+  `,
 
-const root_type_c = css`
-  ${root}
-  transform: rotate(-4deg);
-  &:hover {
-    transform: rotate(-4deg) translateY(-5px);
-  }
-`;
+  c: css`
+    ${root}
+    transform: rotate(-4deg);
+    &:hover {
+      transform: rotate(-4deg) translateY(-5px);
+    }
+  `,
 
-const root_type_d = css`
-  ${root}
-  transform: rotate(2deg);
-  &:hover {
-    transform: rotate(2deg) translateY(-5px);
-  }
-`;
+  d: css`
+    ${root}
+    transform: rotate(2deg);
+    &:hover {
+      transform: rotate(2deg) translateY(-5px);
+    }
+  `,
 
-const root_type_e = css`
-  ${root}
-  transform: rotate(3deg);
-  &:hover {
-    transform: rotate(3deg) translateY(-5px);
-  }
-`;
+  e: css`
+    ${root}
+    transform: rotate(3deg);
+    &:hover {
+      transform: rotate(3deg) translateY(-5px);
+    }
+  `,
 
-const root_type_f = css`
-  ${root}
-  transform: rotate(4deg);
-  &:hover {
-    transform: rotate(4deg) translateY(-5px);
-  }
-`;
+  f: css`
+    ${root}
+    transform: rotate(4deg);
+    &:hover {
+      transform: rotate(4deg) translateY(-5px);
+    }
+  `,
+};
 
 const food = css`
   cursor: pointer;
