@@ -2,6 +2,7 @@ import { VFC } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
+import { rgba } from 'emotion-rgba';
 import { useUser } from 'src/hooks/useUser';
 import { useAuth } from 'src/hooks/useAuth';
 import {
@@ -264,7 +265,7 @@ const userAvatarContent = css`
   height: 55px;
   position: relative;
   border-radius: 50%;
-  box-shadow: 3px 2px 0 0 rgba(black, 0.3);
+  box-shadow: 3px 2px 0 0 ${rgba('#000', 0.3)};
   @media screen and (max-width: 750px) {
     width: 42px;
     height: 44px;

@@ -140,7 +140,6 @@ const content__title = css`
   font-size: 32px;
   font-weight: bold;
   margin: 0 0 24px;
-  text-shadow: 2px 2px rgba(black, 0.14);
   @media screen and (max-width: 1000px) {
     font-size: 26px;
   }

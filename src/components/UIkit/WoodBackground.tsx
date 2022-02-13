@@ -1,5 +1,6 @@
 import { ReactNode, VFC } from 'react';
 import { css } from '@emotion/react';
+import { rgba } from 'emotion-rgba';
 
 type Props = {
   children: ReactNode;
@@ -32,7 +33,7 @@ const woodPins = css`
   position: absolute;
   width: 40px;
   border-radius: 50%;
-  box-shadow: 3px 3px 0 0 rgba(black, 0.3);
+  box-shadow: 3px 3px 0 0 ${rgba('#000', 0.3)};
   @media screen and (max-width: 600px) {
     width: 32px;
   }
