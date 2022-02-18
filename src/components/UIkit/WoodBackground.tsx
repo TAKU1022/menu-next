@@ -37,19 +37,19 @@ const woodPins = css`
   @media screen and (max-width: 600px) {
     width: 32px;
   }
-  &:nth-child(1) {
+  &:nth-of-type(1) {
     top: 8px;
     left: 8px;
   }
-  &:nth-child(2) {
+  &:nth-of-type(2) {
     top: 8px;
     right: 8px;
   }
-  &:nth-child(3) {
+  &:nth-of-type(3) {
     bottom: 8px;
     left: 8px;
   }
-  &:nth-child(4) {
+  &:nth-of-type(4) {
     bottom: 8px;
     right: 8px;
   }
