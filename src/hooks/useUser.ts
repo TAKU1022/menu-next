@@ -1,8 +1,8 @@
-import { User } from '@/types/typeUser';
 import { useRouter } from 'next/router';
 import { useCallback, useContext } from 'react';
 import { UserContext } from 'src/components/context/user/UserProvider';
-import { auth, db } from 'src/firebase';
+import { auth } from 'src/firebase';
+import { fetchUserById } from 'src/firebase/db/user';
 
 export const useUser = () => {
   const context = useContext(UserContext);
@@ -14,17 +14,14 @@ export const useUser = () => {
   const { userState, dispatch } = context;
   const router = useRouter();
 
-  const listenUserState = useCallback(() => {
+  const guardAuth = useCallback(() => {
     return auth.onAuthStateChanged((user) => {
       if (user) {
         const uid = user.uid;
-        db.collection('users')
-          .doc(uid)
-          .get()
-          .then((snapshot) => {
-            const data = snapshot.data() as User;
-            dispatch({ type: 'SIGN_IN', payload: data });
-          });
+        fetchUserById(uid).then((snapshot) => {
+          const data = snapshot.data();
+          dispatch({ type: 'SIGN_IN', payload: data! });
+        });
       } else {
         router.push('/sign_in');
       }
@@ -33,6 +30,6 @@ export const useUser = () => {
 
   return {
     userState,
-    listenUserState,
+    guardAuth,
   };
 };

@@ -6,13 +6,13 @@ type Props = {
 };
 
 export const AuthGuard: VFC<Props> = ({ children }) => {
-  const { userState, listenUserState } = useUser();
+  const { userState, guardAuth } = useUser();
 
   useEffect(() => {
     if (!userState) {
-      listenUserState();
+      guardAuth();
     }
-  }, [userState, listenUserState]);
+  }, [userState, guardAuth]);
 
   return userState ? <>{children}</> : <></>;
 };
