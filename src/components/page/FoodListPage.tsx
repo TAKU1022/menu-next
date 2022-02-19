@@ -26,7 +26,7 @@ export const FoodListPage: VFC<Props> = ({ foodList, lastFoodId }) => {
         updateFoodId(data.lastFoodId);
         updateIsLoading((prevState) => !prevState);
       });
-    }, 1200);
+    }, 1000);
   };
 
   return (
