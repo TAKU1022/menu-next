@@ -27,18 +27,17 @@ const getRandomRotateId = (): RotateType => {
   return rotateType;
 };
 
-export const fetchFoodList = async (
-  currentPage: number
-): Promise<FoodCard[]> => {
+export const fetchFoodList = async (foodId: string | undefined) => {
   const perPage = 24;
 
-  const snapshot = await db
-    .collection('foods')
-    .withConverter(foodConverter)
-    .orderBy('categoryId')
-    .startAfter(currentPage)
-    .limit(perPage)
-    .get({ source: 'server' });
+  const ref = db.collection('foods').withConverter(foodConverter);
+  const snapshot = foodId
+    ? await ref
+        .orderBy('foodId')
+        .startAfter(foodId)
+        .limit(perPage)
+        .get({ source: 'server' })
+    : await ref.orderBy('foodId').limit(perPage).get({ source: 'server' });
 
   const foodCardList: FoodCard[] = snapshot.docs.map(
     (doc: firebase.firestore.QueryDocumentSnapshot<Food>) => {
@@ -50,6 +49,9 @@ export const fetchFoodList = async (
       };
     }
   );
+  const lastFoodId = foodCardList.map((foodCard) => foodCard.data.foodId)[
+    foodCardList.length - 1
+  ];
 
-  return foodCardList;
+  return { foodCardList, lastFoodId };
 };

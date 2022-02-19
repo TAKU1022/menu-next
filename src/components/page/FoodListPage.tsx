@@ -4,13 +4,30 @@ import { Container } from '../UIkit/Container';
 import { WoodBackground } from '../UIkit/WoodBackground';
 import { FoodCard } from '@/types/typeFood';
 import { FoodPhotoCard } from '../UIkit/FoodPhotoCard';
+import { fetchFoodList } from 'src/firebase/db/food';
+import { Spinner } from '@chakra-ui/react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 type Props = {
   foodList: FoodCard[];
+  lastFoodId: string;
 };
 
-export const FoodListPage: VFC<Props> = ({ foodList }) => {
+export const FoodListPage: VFC<Props> = ({ foodList, lastFoodId }) => {
   const [foodCards, updateFoodCards] = useState<FoodCard[]>(foodList);
+  const [foodId, updateFoodId] = useState<string>(lastFoodId);
+  const [isLoading, updateIsLoading] = useState<boolean>(false);
+
+  const fetchMoreData = () => {
+    updateIsLoading((prevState) => !prevState);
+    setTimeout(() => {
+      fetchFoodList(foodId).then((data) => {
+        updateFoodCards((prevState) => [...prevState, ...data.foodCardList]);
+        updateFoodId(data.lastFoodId);
+        updateIsLoading((prevState) => !prevState);
+      });
+    }, 1200);
+  };
 
   return (
     <Container>
@@ -21,11 +38,21 @@ export const FoodListPage: VFC<Props> = ({ foodList }) => {
             src="/images/titles/food-list-title.png"
             alt="メニュー一覧"
           />
-          <div css={grid}>
+          <InfiniteScroll
+            dataLength={foodCards.length}
+            next={fetchMoreData}
+            hasMore={true}
+            loader={null}
+            style={{ overflow: 'initial' }}
+            css={grid}
+          >
             {foodCards.map((foodCard) => (
               <FoodPhotoCard key={foodCard.data.foodId} foodCard={foodCard} />
             ))}
-          </div>
+          </InfiniteScroll>
+          {isLoading && (
+            <Spinner size="xl" color="#43a047" thickness="4px" mt={4} />
+          )}
         </div>
       </WoodBackground>
     </Container>

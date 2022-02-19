@@ -14,5 +14,5 @@ export const AuthGuard: VFC<Props> = ({ children }) => {
     }
   }, [userState, listenUserState]);
 
-  return <>{children}</>;
+  return userState ? <>{children}</> : <></>;
 };
