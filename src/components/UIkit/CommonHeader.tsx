@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
 import { rgba } from 'emotion-rgba';
 import { useUser } from 'src/hooks/useUser';
-import { useAuth } from 'src/hooks/useAuth';
 import {
   Menu,
   MenuButton,
@@ -16,7 +15,7 @@ import {
 export const CommonHeader: VFC = () => {
   const router = useRouter();
   const { userState } = useUser();
-  const { signOut } = useAuth();
+  const { signOut } = useUser();
 
   const navigatePage = (path: string) => {
     router.push(path);
