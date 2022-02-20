@@ -1,107 +1,26 @@
 import { VFC } from 'react';
 import { css } from '@emotion/react';
 import { rgba } from 'emotion-rgba';
-import { FoodCard } from '@/types/typeFood';
+import { Food, RotateType } from '@/types/typeFood';
 import Link from 'next/link';
 
 type Props = {
-  foodCard: FoodCard;
+  foodData: Food;
 };
 
-export const FoodPhotoCard: VFC<Props> = ({ foodCard }) => {
-  const rotateId: keyof typeof rootType = foodCard.rotateType.rotateId;
-
+export const FoodPhotoCard: VFC<Props> = ({ foodData }) => {
   return (
-    <div css={rootType[rotateId]}>
-      <Link href={`/food_list/${foodCard.data.foodId}`}>
-        <a css={food}>
-          <img css={food__pin} src={'/images/others/pin-red.png'} alt="" />
-          <div
-            css={food__image}
-            style={{ backgroundImage: `url(${foodCard.data.image})` }}
-          ></div>
-          <p css={food__name}>{foodCard.data.name}</p>
-        </a>
-      </Link>
-    </div>
+    <Link href={`/food_list/${foodData.foodId}`} passHref>
+      <a css={food}>
+        <img css={food__pin} src={'/images/others/pin-red.png'} alt="" />
+        <div
+          css={food__image}
+          style={{ backgroundImage: `url(${foodData.image})` }}
+        ></div>
+        <p css={food__name}>{foodData.name}</p>
+      </a>
+    </Link>
   );
-};
-
-const root = css`
-  z-index: 0;
-  transform-origin: center 8px 0;
-  transition: 0.5s;
-  border-radius: 4px;
-  box-shadow: 0 0 1px 1px ${rgba('#000', 0.14)};
-  @media screen and (max-width: 320px) {
-    transform-origin: center 4px 0;
-  }
-  &:hover {
-    z-index: 2;
-    box-shadow: 0 0 5px 1px ${rgba('#000', 0.14)};
-  }
-  &:hover a {
-    &::before {
-      left: 8px;
-      box-shadow: 0 18px ${rgba('#000', 0.3)};
-    }
-  }
-  &:hover a {
-    &::after {
-      right: 8px;
-      box-shadow: 0 18px ${rgba('#000', 0.3)};
-    }
-  }
-`;
-
-const rootType = {
-  a: css`
-    ${root}
-    transform: rotate(-2deg);
-    &:hover {
-      transform: rotate(-2deg) translateY(-5px);
-    }
-  `,
-
-  b: css`
-    ${root}
-    transform: rotate(-3deg);
-    &:hover {
-      transform: rotate(-3deg) translateY(-5px);
-    }
-  `,
-
-  c: css`
-    ${root}
-    transform: rotate(-4deg);
-    &:hover {
-      transform: rotate(-4deg) translateY(-5px);
-    }
-  `,
-
-  d: css`
-    ${root}
-    transform: rotate(2deg);
-    &:hover {
-      transform: rotate(2deg) translateY(-5px);
-    }
-  `,
-
-  e: css`
-    ${root}
-    transform: rotate(3deg);
-    &:hover {
-      transform: rotate(3deg) translateY(-5px);
-    }
-  `,
-
-  f: css`
-    ${root}
-    transform: rotate(4deg);
-    &:hover {
-      transform: rotate(4deg) translateY(-5px);
-    }
-  `,
 };
 
 const food = css`

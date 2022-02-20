@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 import { db } from '..';
-import { Food, FoodCard, RotateType } from '@/types/typeFood';
+import { Food } from '@/types/typeFood';
 
 const foodConverter = {
   toFirestore(food: Food): firebase.firestore.DocumentData {
@@ -20,13 +20,6 @@ const foodConverter = {
   },
 };
 
-const getRandomRotateId = (): RotateType => {
-  const rotateTypeIds: string[] = ['a', 'b', 'c', 'd', 'e', 'f'];
-  const randomNumber: number = Math.floor(Math.random() * rotateTypeIds.length);
-  const rotateType = { rotateId: rotateTypeIds[randomNumber] } as RotateType;
-  return rotateType;
-};
-
 export const fetchFoodList = async (foodId: string | undefined) => {
   const perPage = 24;
 
@@ -39,19 +32,13 @@ export const fetchFoodList = async (foodId: string | undefined) => {
         .get({ source: 'server' })
     : await ref.orderBy('foodId').limit(perPage).get({ source: 'server' });
 
-  const foodCardList: FoodCard[] = snapshot.docs.map(
+  const foodList = snapshot.docs.map(
     (doc: firebase.firestore.QueryDocumentSnapshot<Food>) => {
       const foodData: Food = doc.data();
-      const rotateType = getRandomRotateId();
-      return {
-        data: foodData,
-        rotateType,
-      };
+      return foodData;
     }
   );
-  const lastFoodId = foodCardList.map((foodCard) => foodCard.data.foodId)[
-    foodCardList.length - 1
-  ];
+  const lastFoodId = foodList.map((food) => food.foodId)[foodList.length - 1];
 
-  return { foodCardList, lastFoodId };
+  return { foodList, lastFoodId };
 };
