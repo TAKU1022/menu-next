@@ -20,7 +20,9 @@ const foodConverter = {
   },
 };
 
-export const fetchFoodList = async (foodId: string | undefined) => {
+export const fetchFoodList = async (
+  foodId: string | undefined
+): Promise<{ foodList: Food[]; lastFoodId: string }> => {
   const perPage = 24;
 
   const ref = db.collection('foods').withConverter(foodConverter);
