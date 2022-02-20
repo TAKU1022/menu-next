@@ -48,7 +48,7 @@ const footer__inner = css`
   justify-content: space-between;
   margin: 0 auto;
   max-width: 880px;
-  @media screen and (max-width: 450px) {
+  @media screen and (max-width: 768px) {
     flex-flow: column;
   }
 `;
@@ -58,17 +58,17 @@ const list = css`
   list-style: none;
   margin: 0;
   padding: 0;
-  @media screen and (max-width: 450px) {
+  @media screen and (max-width: 768px) {
     margin: 0 auto 16px;
   }
 `;
 
 const list__item = css`
   font-size: 12px;
-  @media screen and (max-width: 450px) {
+  @media screen and (max-width: 768px) {
     font-size: 10px;
   }
-  &:not(:last-child) {
+  &:not(:nth-last-of-type(1)) {
     margin-right: 16px;
   }
 `;
@@ -84,7 +84,7 @@ const list__link = css`
 const corporate = css`
   margin: 0;
   font-size: 12px;
-  @media screen and (max-width: 450px) {
+  @media screen and (max-width: 768px) {
     margin: 0 auto;
     font-size: 10px;
   }
