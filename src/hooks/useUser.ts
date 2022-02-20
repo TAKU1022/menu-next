@@ -1,6 +1,9 @@
 import { useRouter } from 'next/router';
 import { useCallback, useContext } from 'react';
-import { UserContext } from 'src/components/context/user/UserProvider';
+import {
+  initialUserState,
+  UserContext,
+} from 'src/components/context/user/UserProvider';
 import firebase from 'firebase/app';
 import { auth } from 'src/firebase';
 import { fetchUserById } from 'src/firebase/db/user';
@@ -18,7 +21,7 @@ export const useUser = () => {
   const { openMessage } = useMessage();
 
   const listenUserState = useCallback(() => {
-    return auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged((user) => {
       if (user) {
         const uid = user.uid;
         fetchUserById(uid).then((snapshot) => {
@@ -26,10 +29,19 @@ export const useUser = () => {
           dispatch({ type: 'SIGN_IN', payload: data! });
         });
       } else {
+        dispatch({ type: 'SIGN_OUT', payload: initialUserState });
         router.push('/sign_in');
       }
     });
   }, [router, dispatch]);
+
+  const listenGuestState = useCallback(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        router.push('/');
+      }
+    });
+  }, [router]);
 
   const signInWithGoogle = () => {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
@@ -51,7 +63,6 @@ export const useUser = () => {
 
   const signOut = () => {
     auth.signOut().then(() => {
-      router.push('/sign_in');
       openMessage('またお越しください！', 'success');
     });
   };
@@ -59,6 +70,7 @@ export const useUser = () => {
   return {
     userState,
     listenUserState,
+    listenGuestState,
     signInWithGoogle,
     signOut,
   };
