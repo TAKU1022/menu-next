@@ -185,7 +185,7 @@ const content__sentence = css`
     font-size: 13px;
   }
 
-  &:nth-last-child(1) {
+  &:nth-last-of-type(1) {
     margin: 0;
   }
 `;

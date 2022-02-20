@@ -68,6 +68,7 @@ const list__item = css`
   @media screen and (max-width: 768px) {
     font-size: 10px;
   }
+
   &:not(:nth-last-of-type(1)) {
     margin-right: 16px;
   }
