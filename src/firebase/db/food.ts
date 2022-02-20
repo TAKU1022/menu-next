@@ -20,16 +20,14 @@ const foodConverter = {
   },
 };
 
-export const fetchFoodById = async (
-  foodId: string
-): Promise<Food | undefined> => {
+export const fetchFoodById = async (foodId: string): Promise<Food> => {
   const snapshot = await db
     .collection('foods')
     .withConverter(foodConverter)
     .doc(foodId)
     .get();
 
-  return snapshot.data();
+  return snapshot.data()!;
 };
 
 export const fetchFoodList = async (
