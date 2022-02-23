@@ -2,10 +2,10 @@ import { VFC } from 'react';
 import { css } from '@emotion/react';
 import { Button } from '@chakra-ui/react';
 import { FcGoogle } from 'react-icons/fc';
-import { useAuth } from 'src/hooks/useAuth';
+import { useUser } from 'src/hooks/useUser';
 
 export const SignInPage: VFC = () => {
-  const { signInWithGoogle } = useAuth();
+  const { signInWithGoogle } = useUser();
 
   const onClickSignInButton = () => {
     signInWithGoogle();
@@ -185,7 +185,7 @@ const content__sentence = css`
     font-size: 13px;
   }
 
-  &:nth-last-child(1) {
+  &:nth-last-of-type(1) {
     margin: 0;
   }
 `;

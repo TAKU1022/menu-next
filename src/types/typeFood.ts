@@ -8,8 +8,3 @@ export type Food = {
 export type RotateType = {
   rotateId: 'a' | 'b' | 'c' | 'd' | 'e' | 'f';
 };
-
-export type FoodCard = {
-  data: Food;
-  rotateType: RotateType;
-};

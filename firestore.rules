@@ -29,8 +29,8 @@ service cloud.firestore {
       allow delete: if request.auth.uid == resource.data.uid;
     }
     match /myMenus/{myMenuId} {
-      //作成者だけ見ることができる
-      allow read: if request.auth.uid == resource.data.creatorId;
+      //誰でも見ることができる
+      allow read: if true;
       //ログインした人だけ作成できる
       allow create: if isLogin()
       //作成者かつ、そのユーザーを変えようとしていない人がアップデートできる

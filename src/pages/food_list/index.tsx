@@ -1,11 +1,11 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import { CommonLayout } from 'src/components/layout/CommonLayout';
 import { FoodListPage } from 'src/components/page/FoodListPage';
-import { FoodCard } from '@/types/typeFood';
 import { fetchFoodList } from 'src/firebase/db/food';
+import { Food } from '@/types/typeFood';
 
 type Props = {
-  foodList: FoodCard[];
+  foodList: Food[];
   lastFoodId: string;
 };
 
@@ -18,10 +18,10 @@ const FoodList: NextPage<Props> = ({ foodList, lastFoodId }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { foodCardList, lastFoodId } = await fetchFoodList(undefined);
+  const { foodList, lastFoodId } = await fetchFoodList(undefined);
 
   return {
-    props: { foodList: foodCardList, lastFoodId },
+    props: { foodList, lastFoodId },
   };
 };
 

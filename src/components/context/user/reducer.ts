@@ -5,7 +5,7 @@ export type UserAction = {
   payload: User;
 };
 
-export const userReducer = (state: User | undefined, action: UserAction) => {
+export const userReducer = (state: User, action: UserAction) => {
   switch (action.type) {
     case 'SIGN_IN':
       return { ...state, ...action.payload };
