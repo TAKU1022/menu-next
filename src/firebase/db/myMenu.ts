@@ -35,7 +35,9 @@ const myMenuConverter = {
 
 const dayOfWeeks = ['日', '月', '火', '水', '木', '金', '土'];
 
-const fetchMyMenuByUserId = async (userId: string): Promise<MyMenu> => {
+const fetchMyMenuByUserId = async (
+  userId: string
+): Promise<MyMenu | undefined> => {
   const snapshot = await db
     .collection('myMenus')
     .withConverter(myMenuConverter)
@@ -43,31 +45,35 @@ const fetchMyMenuByUserId = async (userId: string): Promise<MyMenu> => {
     .get();
 
   const doc = snapshot.docs[0];
-  return doc.data();
+
+  if (doc) return doc.data();
 };
 
 export const fetchMyMenuWithFoodByUserId = async (
   userId: string
-): Promise<MyMenuWithFood> => {
-  const myMenu: MyMenu = await fetchMyMenuByUserId(userId);
-  const dayMenuWithFoodList: Promise<DayMenuWithFood>[] = Object.values(
-    myMenu.day
-  ).map(async (dayMenu: DayMenu, index: number) => {
-    return {
-      breakfast: await fetchFoodById(dayMenu.breakfastId),
-      lunch: await fetchFoodById(dayMenu.lunchId),
-      dinner: await fetchFoodById(dayMenu.dinnerId),
-      dayOfWeek: dayOfWeeks[index],
-    };
-  });
+): Promise<MyMenuWithFood | undefined> => {
+  const myMenu: MyMenu | undefined = await fetchMyMenuByUserId(userId);
 
-  return {
-    sundayFood: await dayMenuWithFoodList[0],
-    mondayFood: await dayMenuWithFoodList[1],
-    tuesdayFood: await dayMenuWithFoodList[2],
-    wednesdayFood: await dayMenuWithFoodList[3],
-    thursdayFood: await dayMenuWithFoodList[4],
-    fridayFood: await dayMenuWithFoodList[5],
-    saturdayFood: await dayMenuWithFoodList[6],
-  };
+  if (myMenu) {
+    const dayMenuWithFoodList: Promise<DayMenuWithFood>[] = Object.values(
+      myMenu.day
+    ).map(async (dayMenu: DayMenu, index: number) => {
+      return {
+        breakfast: await fetchFoodById(dayMenu.breakfastId),
+        lunch: await fetchFoodById(dayMenu.lunchId),
+        dinner: await fetchFoodById(dayMenu.dinnerId),
+        dayOfWeek: dayOfWeeks[index],
+      };
+    });
+
+    return {
+      sundayFood: await dayMenuWithFoodList[0],
+      mondayFood: await dayMenuWithFoodList[1],
+      tuesdayFood: await dayMenuWithFoodList[2],
+      wednesdayFood: await dayMenuWithFoodList[3],
+      thursdayFood: await dayMenuWithFoodList[4],
+      fridayFood: await dayMenuWithFoodList[5],
+      saturdayFood: await dayMenuWithFoodList[6],
+    };
+  }
 };
