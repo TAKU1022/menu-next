@@ -1,11 +1,44 @@
 import { VFC } from 'react';
 import { css } from '@emotion/react';
+import { rgba } from 'emotion-rgba';
+import { DayMenuWithFood, MyMenuWithFood } from '@/types/typeMyMenu';
+import { FoodPhotoCard } from '../UIkit/FoodPhotoCard';
 
-export const WeekMenuPage: VFC = () => {
+type Props = {
+  myMenu: MyMenuWithFood | undefined;
+};
+
+export const WeekMenuPage: VFC<Props> = ({ myMenu }) => {
+  const rotateType = (index: number) =>
+    (index + 1) % 2 === 0 ? rotateEvenType : rotateOddType;
+
   return (
     <div css={container}>
-      <div>
-        <h1>aaa</h1>
+      <img src="/images/titles/menu-title.png" alt="一週間の献立" css={title} />
+      <div css={grid}>
+        {myMenu &&
+          Object.values(myMenu).map(
+            (dayMenu: DayMenuWithFood, index: number) => (
+              <div css={menu} key={dayMenu.dayOfWeek}>
+                <img
+                  src={`/images/titles/day-of-week-title${index}.png`}
+                  alt={`${dayMenu.dayOfWeek}曜日`}
+                  css={menu__title}
+                />
+                <div css={menuGrid}>
+                  <div css={rotateType(index).breakfast}>
+                    <FoodPhotoCard foodData={dayMenu.breakfast} />
+                  </div>
+                  <div css={rotateType(index).lunch}>
+                    <FoodPhotoCard foodData={dayMenu.lunch} />
+                  </div>
+                  <div css={rotateType(index).dinner}>
+                    <FoodPhotoCard foodData={dayMenu.dinner} />
+                  </div>
+                </div>
+              </div>
+            )
+          )}
       </div>
     </div>
   );
@@ -25,7 +58,7 @@ const container = css`
 `;
 
 const title = css`
-  margin: 0 0 24px;
+  margin: 0 auto 24px;
   @media screen and (max-width: 750px) {
     width: 450px;
   }
@@ -49,19 +82,20 @@ const menu = css`
   @media screen and (max-width: 450px) {
     padding: 4% 2% 20%;
   }
-  &__title {
-    width: 200px;
-    margin: 0 0 16px;
-    @media screen and (max-width: 750px) {
-      width: 160px;
-    }
-    @media screen and (max-width: 600px) {
-      width: 120px;
-      margin: 0 0 8px;
-    }
-    @media screen and (max-width: 320px) {
-      width: 100px;
-    }
+`;
+
+const menu__title = css`
+  width: 200px;
+  margin: 0 auto 16px;
+  @media screen and (max-width: 750px) {
+    width: 160px;
+  }
+  @media screen and (max-width: 600px) {
+    width: 120px;
+    margin: 0 auto 8px;
+  }
+  @media screen and (max-width: 320px) {
+    width: 100px;
   }
 `;
 
@@ -76,7 +110,7 @@ const foodContent = css`
   transform-origin: center 8px 0;
   transition: 0.5s;
   border-radius: 4px;
-  box-shadow: 0 0 1px 1px rgba(black, 0.14);
+  box-shadow: 0 0 1px 1px ${rgba('#000', 0.14)};
   @media screen and (max-width: 750px) {
     transform-origin: center 4px 0;
   }
@@ -85,6 +119,78 @@ const foodContent = css`
   }
   &:hover {
     z-index: 2;
-    box-shadow: 0 0 5px 1px rgba(black, 0.14);
+    box-shadow: 0 0 5px 1px ${rgba('#000', 0.14)};
+  }
+  &:hover a {
+    &::before {
+      left: 2%;
+      box-shadow: 0 17px ${rgba('#000', 0.3)};
+      @media screen and (max-width: 750px) {
+        box-shadow: 0 16px ${rgba('#000', 0.3)};
+      }
+    }
+  }
+  &:hover a {
+    &::after {
+      right: 2%;
+      box-shadow: 0 17px ${rgba('#000', 0.3)};
+      @media screen and (max-width: 750px) {
+        box-shadow: 0 16px ${rgba('#000', 0.3)};
+      }
+    }
   }
 `;
+
+const rotateOddType = {
+  breakfast: css`
+    ${foodContent}
+    transform: rotate(-1deg);
+    &:hover {
+      transform: rotate(-1deg) translateY(-5px);
+    }
+  `,
+
+  lunch: css`
+    ${foodContent}
+    z-index: 1;
+    transform: rotate(-2deg);
+    &:hover {
+      transform: rotate(-2deg) translateY(-5px);
+    }
+  `,
+
+  dinner: css`
+    ${foodContent}
+    transform: rotate(3deg);
+    &:hover {
+      transform: rotate(3deg) translateY(-5px);
+    }
+  `,
+};
+
+const rotateEvenType = {
+  breakfast: css`
+    ${foodContent}
+    transform: rotate(-3deg);
+    &:hover {
+      transform: rotate(-3deg) translateY(-5px);
+    }
+  `,
+
+  lunch: css`
+    ${foodContent}
+    z-index: 1;
+    transform: rotate(2deg);
+    &:hover {
+      transform: rotate(2deg) translateY(-5px);
+    }
+  `,
+
+  dinner: css`
+    ${foodContent}
+    transform: rotate(1deg);
+    &:hover {
+      transform: rotate(1deg) translateY(-5px);
+    }
+  `,
+};

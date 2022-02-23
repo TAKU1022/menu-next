@@ -1,27 +1,36 @@
-import { GetServerSideProps, NextPage } from 'next';
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  NextPage,
+  PreviewData,
+} from 'next';
+import nookies from 'nookies';
 import { CommonLayout } from 'src/components/layout/CommonLayout';
 import { WeekMenuPage } from 'src/components/page/WeekMenuPage';
-import { auth } from 'src/firebase';
 import { fetchMyMenuWithFoodByUserId } from 'src/firebase/db/myMenu';
 import { MyMenuWithFood } from '@/types/typeMyMenu';
+import { ParsedUrlQuery } from 'querystring';
 
 type Props = {
-  myMenu: MyMenuWithFood;
+  myMenu: MyMenuWithFood | undefined;
 };
 
 const WeekMenu: NextPage<Props> = ({ myMenu }) => {
   return (
     <CommonLayout>
-      <WeekMenuPage />
+      <WeekMenuPage myMenu={myMenu} />
     </CommonLayout>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  // const userId = auth.currentUser!.uid;
-  // const myMenu = await fetchMyMenuWithFoodByUserId(userId);
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
+) => {
+  const cookies = nookies.get(context);
+  const myMenu = await fetchMyMenuWithFoodByUserId(cookies.userId);
+
   return {
-    props: {},
+    props: { myMenu },
   };
 };
 
