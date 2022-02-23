@@ -43,9 +43,9 @@ export const FoodListPage: VFC<Props> = ({ foodList, lastFoodId }) => {
       <WoodBackground>
         <div css={root}>
           <img
-            css={title}
             src="/images/titles/food-list-title.png"
             alt="メニュー一覧"
+            css={title}
           />
           <InfiniteScroll
             dataLength={foods.length}
@@ -57,8 +57,8 @@ export const FoodListPage: VFC<Props> = ({ foodList, lastFoodId }) => {
           >
             {foods.map((food) => (
               <div
-                css={rotateType[getRandomRotateId().rotateId]}
                 key={food.foodId}
+                css={rotateType[getRandomRotateId().rotateId]}
               >
                 <FoodPhotoCard foodData={food} />
               </div>

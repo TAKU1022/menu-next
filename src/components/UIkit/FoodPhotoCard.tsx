@@ -12,10 +12,10 @@ export const FoodPhotoCard: VFC<Props> = ({ foodData }) => {
   return (
     <Link href={`/food_list/${foodData.foodId}`} passHref>
       <a css={food}>
-        <img css={food__pin} src={'/images/others/pin-red.png'} alt="" />
+        <img src={'/images/others/pin-red.png'} alt="" css={food__pin} />
         <div
-          css={food__image}
           style={{ backgroundImage: `url(${foodData.image})` }}
+          css={food__image}
         ></div>
         <p css={food__name}>{foodData.name}</p>
       </a>
