@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useCallback, useContext } from 'react';
+import { setCookie, destroyCookie } from 'nookies';
 import {
   initialUserState,
   UserContext,
@@ -24,11 +25,17 @@ export const useUser = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         const uid = user.uid;
+
+        setCookie(null, 'userId', uid, {
+          maxAge: 60 * 60 * 24 * 7 * 1000,
+        });
+
         fetchUserById(uid).then((snapshot) => {
           const data = snapshot.data();
           dispatch({ type: 'SIGN_IN', payload: data! });
         });
       } else {
+        destroyCookie(null, 'userId');
         dispatch({ type: 'SIGN_OUT', payload: initialUserState });
         router.push('/sign_in');
       }
