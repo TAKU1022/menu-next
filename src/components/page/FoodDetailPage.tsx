@@ -7,6 +7,7 @@ import { Food } from '@/types/typeFood';
 import { Container } from '../UIkit/Container';
 import { WoodBackground } from '../UIkit/WoodBackground';
 import { Recipe, RecipeRanking } from '@/types/typeRecipeRanking';
+import { Spinner } from '@chakra-ui/react';
 
 type Props = {
   food: Food;
@@ -26,7 +27,7 @@ export const FoodDetailPage: VFC<Props> = ({ food }) => {
             <h1 css={foodName}>
               <span css={foodName__text}>{food.name}のレシピ</span>
             </h1>
-            {data && (
+            {data ? (
               <div css={grid}>
                 {data.result.map((recipeData: Recipe) => (
                   <div key={recipeData.recipeId} css={recipe}>
@@ -87,6 +88,8 @@ export const FoodDetailPage: VFC<Props> = ({ food }) => {
                   </div>
                 ))}
               </div>
+            ) : (
+              <Spinner size="lg" color="#43a047" thickness="4px" mt={16} />
             )}
           </div>
         </WoodBackground>
