@@ -54,3 +54,12 @@ export const fetchFoodList = async (
 
   return { foodList, lastFoodId };
 };
+
+export const fetchAllFood = async (): Promise<Food[]> => {
+  const snapshot = await db
+    .collection('foods')
+    .withConverter(foodConverter)
+    .get();
+
+  return snapshot.docs.map((doc) => doc.data());
+};

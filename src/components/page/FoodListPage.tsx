@@ -65,7 +65,7 @@ export const FoodListPage: VFC<Props> = ({ foodList, lastFoodId }) => {
             ))}
           </InfiniteScroll>
           {isLoading && (
-            <Spinner size="xl" color="#43a047" thickness="4px" mt={4} />
+            <Spinner size="lg" color="#43a047" thickness="4px" mt={4} />
           )}
         </div>
       </WoodBackground>
