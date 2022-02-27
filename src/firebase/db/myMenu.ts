@@ -49,7 +49,7 @@ const fetchMyMenuByUserId = async (
   if (doc) return doc.data();
 };
 
-export const fetchMyMenuWithFoodByUserId = async (
+export const fetchMyMenuWithFood = async (
   userId: string
 ): Promise<MyMenuWithFood | undefined> => {
   const myMenu: MyMenu | undefined = await fetchMyMenuByUserId(userId);
@@ -75,5 +75,17 @@ export const fetchMyMenuWithFoodByUserId = async (
       fridayFood: await dayMenuWithFoodList[5],
       saturdayFood: await dayMenuWithFoodList[6],
     };
+  }
+};
+
+export const fetchTodayMenuWithFood = async (
+  userId: string
+): Promise<DayMenuWithFood | undefined> => {
+  const myMenu: MyMenuWithFood | undefined = await fetchMyMenuWithFood(userId);
+  const today = new Date();
+  const dayOfWeek: number = today.getDay();
+
+  if (myMenu) {
+    return Object.values(myMenu)[dayOfWeek];
   }
 };

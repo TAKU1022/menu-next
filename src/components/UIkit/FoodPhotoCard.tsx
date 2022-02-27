@@ -10,7 +10,11 @@ type Props = {
 
 export const FoodPhotoCard: VFC<Props> = ({ foodData }) => {
   return (
-    <Link href={`/food_list/${foodData.foodId}`} passHref>
+    <Link
+      href={`/food_list/[slug]`}
+      as={`/food_list/${foodData.foodId}`}
+      passHref
+    >
       <a css={food}>
         <img src={'/images/others/pin-red.png'} alt="" css={food__pin} />
         <div

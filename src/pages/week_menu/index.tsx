@@ -7,7 +7,7 @@ import {
 import nookies from 'nookies';
 import { CommonLayout } from 'src/components/layout/CommonLayout';
 import { WeekMenuPage } from 'src/components/page/WeekMenuPage';
-import { fetchMyMenuWithFoodByUserId } from 'src/firebase/db/myMenu';
+import { fetchMyMenuWithFood } from 'src/firebase/db/myMenu';
 import { MyMenuWithFood } from '@/types/typeMyMenu';
 import { ParsedUrlQuery } from 'querystring';
 
@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
 ) => {
   const cookies = nookies.get(context);
-  const myMenu = await fetchMyMenuWithFoodByUserId(cookies.userId);
+  const myMenu = await fetchMyMenuWithFood(cookies.userId);
 
   return {
     props: { myMenu },
