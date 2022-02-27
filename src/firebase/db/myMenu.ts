@@ -49,7 +49,7 @@ const fetchMyMenuByUserId = async (
   if (doc) return doc.data();
 };
 
-export const fetchMyMenuWithFoodByUserId = async (
+export const fetchMyMenuWithFood = async (
   userId: string
 ): Promise<MyMenuWithFood | undefined> => {
   const myMenu: MyMenu | undefined = await fetchMyMenuByUserId(userId);
