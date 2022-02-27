@@ -25,6 +25,7 @@ const wrapper = css`
   flex-flow: column;
   min-height: 100vh;
   background-image: url('/images/backgrounds/green-background.png');
+  overflow: hidden;
 `;
 
 const main = css`
