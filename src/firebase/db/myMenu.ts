@@ -77,3 +77,15 @@ export const fetchMyMenuWithFood = async (
     };
   }
 };
+
+export const fetchTodayMenuWithFood = async (
+  userId: string
+): Promise<DayMenuWithFood | undefined> => {
+  const myMenu: MyMenuWithFood | undefined = await fetchMyMenuWithFood(userId);
+  const today = new Date();
+  const dayOfWeek: number = today.getDay();
+
+  if (myMenu) {
+    return Object.values(myMenu)[dayOfWeek];
+  }
+};
