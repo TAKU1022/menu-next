@@ -56,7 +56,7 @@ export const CommonHeader: VFC = () => {
               />
             </a>
           </Link>
-          <Link href={'/post'} passHref>
+          <Link href={'/post_list'} passHref>
             <a css={linkPost}>
               <img src="/images/icons/post-icon.png" alt="みんなの献立画面へ" />
             </a>
