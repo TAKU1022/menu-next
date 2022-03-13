@@ -69,18 +69,18 @@ const food__pin = css`
   top: 8px;
   left: 50%;
   border-radius: 50%;
-  box-shadow: 4px 4px 0 0 rgba(black, 0.3);
+  box-shadow: 4px 4px 0 0 ${rgba('#000', 0.3)};
   transform: translateX(-50%);
   z-index: 1;
   @media screen and (max-width: 750px) {
     width: 12px;
     top: 4px;
-    box-shadow: 3px 3px 0 0 rgba(black, 0.3);
+    box-shadow: 3px 3px 0 0 ${rgba('#000', 0.3)};
   }
   @media screen and (max-width: 600px) {
     width: 10px;
     top: 2px;
-    box-shadow: 2px 2px 0 0 rgba(black, 0.3);
+    box-shadow: 2px 2px 0 0 ${rgba('#000', 0.3)};
   }
 `;
 
