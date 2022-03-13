@@ -30,8 +30,12 @@ const userConverter = {
   },
 };
 
-export const fetchUserById = (
-  uid: string
-): Promise<firebase.firestore.DocumentSnapshot<User>> => {
-  return db.collection('users').withConverter(userConverter).doc(uid).get();
+export const fetchUserById = async (uid: string): Promise<User | undefined> => {
+  const snapshot = await db
+    .collection('users')
+    .withConverter(userConverter)
+    .doc(uid)
+    .get();
+
+  return snapshot.data();
 };

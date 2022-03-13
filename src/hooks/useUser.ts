@@ -30,9 +30,8 @@ export const useUser = () => {
           maxAge: 60 * 60 * 24 * 7 * 1000,
         });
 
-        fetchUserById(uid).then((snapshot) => {
-          const data = snapshot.data();
-          dispatch({ type: 'SIGN_IN', payload: data! });
+        fetchUserById(uid).then((user) => {
+          dispatch({ type: 'SIGN_IN', payload: user! });
         });
       } else {
         destroyCookie(null, 'userId');
