@@ -34,8 +34,11 @@ const food = css`
   background-color: #f0eddd;
   border-radius: 4px;
   position: relative;
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 750px) {
     padding: 8px;
+  }
+  @media screen and (max-width: 600px) {
+    padding: 4px;
   }
   &::before,
   &::after {
@@ -51,27 +54,33 @@ const food = css`
     box-shadow: 0 15px ${rgba('#000', 0.3)};
   }
   &::before {
-    left: 10px;
+    left: 3%;
     transform: rotate(-5deg);
   }
   &::after {
-    right: 10px;
+    right: 3%;
     transform: rotate(5deg);
   }
 `;
 
 const food__pin = css`
-  width: 16px;
   position: absolute;
+  width: 16px;
   top: 8px;
   left: 50%;
   border-radius: 50%;
   box-shadow: 4px 4px 0 0 ${rgba('#000', 0.3)};
   transform: translateX(-50%);
-  @media screen and (max-width: 320px) {
-    width: 14px;
+  z-index: 1;
+  @media screen and (max-width: 750px) {
+    width: 12px;
     top: 4px;
     box-shadow: 3px 3px 0 0 ${rgba('#000', 0.3)};
+  }
+  @media screen and (max-width: 600px) {
+    width: 10px;
+    top: 2px;
+    box-shadow: 2px 2px 0 0 ${rgba('#000', 0.3)};
   }
 `;
 
@@ -80,6 +89,7 @@ const food__image = css`
   background-position: center;
   padding-bottom: 56.25%;
   border-radius: 5px;
+  position: relative;
 `;
 
 const food__name = css`
@@ -88,8 +98,16 @@ const food__name = css`
   font-weight: bold;
   letter-spacing: 2.5px;
   padding: 16px 0 0;
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 750px) {
     padding: 8px 0 0;
     font-size: 14px;
+  }
+  @media screen and (max-width: 600px) {
+    padding: 4px 0 0;
+    font-size: 11px;
+    letter-spacing: 0;
+  }
+  @media screen and (max-width: 320px) {
+    font-size: 10px;
   }
 `;
