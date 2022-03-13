@@ -1,6 +1,5 @@
 import { useEffect, useState, VFC } from 'react';
 import { css } from '@emotion/react';
-import { rgba } from 'emotion-rgba';
 import { Container } from '../UIkit/Container';
 import { WoodBackground } from '../UIkit/WoodBackground';
 import { PostWithFoodWithUser } from '@/types/typePost';
