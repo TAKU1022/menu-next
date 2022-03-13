@@ -9,6 +9,7 @@ import firebase from 'firebase/app';
 import { auth } from 'src/firebase';
 import { fetchUserById } from 'src/firebase/db/user';
 import { useMessage } from './useMessage';
+import { User } from '@/types/typeUser';
 
 export const useUser = () => {
   const context = useContext(UserContext);
@@ -30,7 +31,7 @@ export const useUser = () => {
           maxAge: 60 * 60 * 24 * 7 * 1000,
         });
 
-        fetchUserById(uid).then((user) => {
+        fetchUserById(uid).then((user: User | undefined) => {
           dispatch({ type: 'SIGN_IN', payload: user! });
         });
       } else {
