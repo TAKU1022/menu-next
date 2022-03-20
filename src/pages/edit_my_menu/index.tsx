@@ -1,12 +1,13 @@
 import { NextPage } from 'next';
 import { CommonLayout } from 'src/components/layout/CommonLayout';
+import { EditMyMenuPage } from 'src/components/page/EditPage';
 
-const Edit: NextPage = () => {
+const EditMyMenu: NextPage = () => {
   return (
     <CommonLayout>
-      <div>
-        <h2>hhh</h2>
-      </div>
+      <EditMyMenuPage />
     </CommonLayout>
   );
 };
+
+export default EditMyMenu;
