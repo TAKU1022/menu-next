@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import { User } from '@/types/typeUser';
 import { db } from '..';
 
-const userConverter = {
+export const userConverter = {
   toFirestore(user: User): firebase.firestore.DocumentData {
     return { ...user };
   },

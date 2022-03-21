@@ -1,19 +1,22 @@
+import { useRouter } from 'next/router';
 import { ReactNode, useEffect, VFC } from 'react';
 import { useUser } from 'src/hooks/useUser';
-import { initialUserState } from '../context/user/UserProvider';
 
 type Props = {
   children: ReactNode;
 };
 
 export const AuthGuard: VFC<Props> = ({ children }) => {
-  const { userState, listenUserState } = useUser();
+  const router = useRouter();
+  const { firebaseUser } = useUser();
 
   useEffect(() => {
-    if (userState === initialUserState) {
-      listenUserState();
+    if (!firebaseUser) {
+      router.push('/sign_in');
     }
-  }, [userState, listenUserState]);
+  }, [firebaseUser, router]);
 
-  return userState === initialUserState ? <></> : <>{children}</>;
+  if (!firebaseUser) return null;
+
+  return <>{children}</>;
 };

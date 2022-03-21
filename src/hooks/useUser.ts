@@ -1,15 +1,9 @@
 import { useRouter } from 'next/router';
-import { useCallback, useContext } from 'react';
-import { setCookie, destroyCookie } from 'nookies';
-import {
-  initialUserState,
-  UserContext,
-} from 'src/components/context/user/UserProvider';
+import { useContext } from 'react';
+import { UserContext } from 'src/components/context/user/UserProvider';
 import firebase from 'firebase/app';
 import { auth } from 'src/firebase';
-import { fetchUserById } from 'src/firebase/db/user';
 import { useMessage } from './useMessage';
-import { User } from '@/types/typeUser';
 
 export const useUser = () => {
   const context = useContext(UserContext);
@@ -18,37 +12,9 @@ export const useUser = () => {
     throw new Error('useUser must be used within a UserProvider');
   }
 
-  const { userState, dispatch } = context;
+  const { firebaseUser, updateFirebaseUser, user, updateUser } = context;
   const router = useRouter();
   const { openMessage } = useMessage();
-
-  const listenUserState = useCallback(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        const uid = user.uid;
-
-        setCookie(null, 'userId', uid, {
-          maxAge: 60 * 60 * 24 * 7 * 1000,
-        });
-
-        fetchUserById(uid).then((user: User | undefined) => {
-          dispatch({ type: 'SIGN_IN', payload: user! });
-        });
-      } else {
-        destroyCookie(null, 'userId');
-        dispatch({ type: 'SIGN_OUT', payload: initialUserState });
-        router.push('/sign_in');
-      }
-    });
-  }, [router, dispatch]);
-
-  const listenGuestState = useCallback(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        router.push('/');
-      }
-    });
-  }, [router]);
 
   const signInWithGoogle = () => {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
@@ -70,14 +36,14 @@ export const useUser = () => {
 
   const signOut = () => {
     auth.signOut().then(() => {
+      router.push('/sign_in');
       openMessage('またお越しください！', 'success');
     });
   };
 
   return {
-    userState,
-    listenUserState,
-    listenGuestState,
+    firebaseUser,
+    user,
     signInWithGoogle,
     signOut,
   };

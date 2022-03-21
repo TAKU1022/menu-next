@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const HomePage: VFC<Props> = ({ todayMenu }) => {
-  const { userState } = useUser();
+  const { user } = useUser();
 
   const dayAlt = (index: number) => {
     if (index === 0) return '朝ごはん';
@@ -22,9 +22,11 @@ export const HomePage: VFC<Props> = ({ todayMenu }) => {
   };
 
   const isEaten = (index: number) => {
-    if (index === 0) return userState.isEatenBreakfast;
-    if (index === 1) return userState.isEatenLunch;
-    if (index === 2) return userState.isEatenDinner;
+    if (!user) return null;
+
+    if (index === 0) return user.isEatenBreakfast;
+    else if (index === 1) return user.isEatenLunch;
+    else if (index === 2) return user.isEatenDinner;
   };
 
   return (
