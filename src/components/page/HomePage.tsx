@@ -1,5 +1,5 @@
 import { DayMenuWithFood } from '@/types/typeMyMenu';
-import { VFC } from 'react';
+import { useEffect, useState, VFC } from 'react';
 import { css } from '@emotion/react';
 import { rgba } from 'emotion-rgba';
 import { Food } from '@/types/typeFood';
@@ -7,12 +7,10 @@ import Link from 'next/link';
 import { PrimaryButton } from '../UIkit/PrimaryButton';
 import { MdFindReplace, MdCheckCircleOutline, MdUndo } from 'react-icons/md';
 import { useUser } from 'src/hooks/useUser';
+import { fetchTodayMenuWithFood } from 'src/firebase/db/myMenu';
 
-type Props = {
-  todayMenu: DayMenuWithFood | undefined;
-};
-
-export const HomePage: VFC<Props> = ({ todayMenu }) => {
+export const HomePage: VFC = () => {
+  const [todayMenu, updateTodayMenu] = useState<DayMenuWithFood | null>(null);
   const { user } = useUser();
 
   const dayAlt = (index: number) => {
@@ -28,6 +26,16 @@ export const HomePage: VFC<Props> = ({ todayMenu }) => {
     else if (index === 1) return user.isEatenLunch;
     else if (index === 2) return user.isEatenDinner;
   };
+
+  useEffect(() => {
+    if (user) {
+      fetchTodayMenuWithFood(user.uid).then(
+        (menuData: DayMenuWithFood | null) => {
+          updateTodayMenu(menuData);
+        }
+      );
+    }
+  }, [user]);
 
   return (
     <div css={container}>

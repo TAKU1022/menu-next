@@ -21,6 +21,7 @@ export const FoodListPage: VFC<Props> = ({ foodList, lastFoodId }) => {
 
   const fetchMoreData = () => {
     updateIsLoading((prevState) => !prevState);
+
     setTimeout(() => {
       fetchFoodList(foodId).then((data) => {
         updateFoods((prevState) => [...prevState, ...data.foodList]);

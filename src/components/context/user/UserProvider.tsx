@@ -10,8 +10,8 @@ import {
 import { User } from '@/types/typeUser';
 import firebase from 'firebase/app';
 import { auth, db } from 'src/firebase';
-import { destroyCookie, setCookie } from 'nookies';
 import { userConverter } from 'src/firebase/db/user';
+import { useRouter } from 'next/router';
 
 type Context = {
   firebaseUser: firebase.User | null;
@@ -31,6 +31,7 @@ export const UserProvider: VFC<Props> = ({ children }) => {
     null
   );
   const [user, updateUser] = useState<User | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     let unsubscribeUser: firebase.Unsubscribe;
@@ -38,10 +39,6 @@ export const UserProvider: VFC<Props> = ({ children }) => {
       (firebaseUserData: firebase.User | null) => {
         if (firebaseUserData) {
           const uid = firebaseUserData.uid;
-
-          setCookie(null, 'userId', uid, {
-            maxAge: 60 * 60 * 24 * 7 * 1000,
-          });
 
           unsubscribeUser = db
             .collection('users')
@@ -52,7 +49,7 @@ export const UserProvider: VFC<Props> = ({ children }) => {
               firebaseUserData.getIdToken(true);
             });
         } else {
-          destroyCookie(null, 'userId');
+          router.push('/sign_in');
           updateUser(null);
         }
 

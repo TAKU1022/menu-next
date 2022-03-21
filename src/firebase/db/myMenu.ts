@@ -16,7 +16,8 @@ const myMenuConverter = {
     snapshot: firebase.firestore.QueryDocumentSnapshot,
     options: firebase.firestore.SnapshotOptions
   ): MyMenu {
-    const data = snapshot.data(options);
+    const data = snapshot.data(options) as MyMenu;
+
     return {
       day: {
         sunday: data.day.sunday,
@@ -35,9 +36,7 @@ const myMenuConverter = {
 
 const dayOfWeeks = ['日', '月', '火', '水', '木', '金', '土'];
 
-const fetchMyMenuByUserId = async (
-  userId: string
-): Promise<MyMenu | undefined> => {
+const fetchMyMenuByUserId = async (userId: string): Promise<MyMenu | null> => {
   const snapshot = await db
     .collection('myMenus')
     .withConverter(myMenuConverter)
@@ -46,46 +45,48 @@ const fetchMyMenuByUserId = async (
 
   const doc = snapshot.docs[0];
 
-  if (doc) return doc.data();
+  if (!doc) return null;
+
+  return doc.data();
 };
 
 export const fetchMyMenuWithFood = async (
   userId: string
-): Promise<MyMenuWithFood | undefined> => {
-  const myMenu: MyMenu | undefined = await fetchMyMenuByUserId(userId);
+): Promise<MyMenuWithFood | null> => {
+  const myMenu: MyMenu | null = await fetchMyMenuByUserId(userId);
 
-  if (myMenu) {
-    const dayMenuWithFoodList: Promise<DayMenuWithFood>[] = Object.values(
-      myMenu.day
-    ).map(async (dayMenu: DayMenu, index: number) => {
-      return {
-        breakfast: await fetchFoodById(dayMenu.breakfastId),
-        lunch: await fetchFoodById(dayMenu.lunchId),
-        dinner: await fetchFoodById(dayMenu.dinnerId),
-        dayOfWeek: dayOfWeeks[index],
-      };
-    });
+  if (!myMenu) return null;
 
+  const dayMenuWithFoodList: Promise<DayMenuWithFood>[] = Object.values(
+    myMenu.day
+  ).map(async (dayMenu: DayMenu, index: number) => {
     return {
-      sundayFood: await dayMenuWithFoodList[0],
-      mondayFood: await dayMenuWithFoodList[1],
-      tuesdayFood: await dayMenuWithFoodList[2],
-      wednesdayFood: await dayMenuWithFoodList[3],
-      thursdayFood: await dayMenuWithFoodList[4],
-      fridayFood: await dayMenuWithFoodList[5],
-      saturdayFood: await dayMenuWithFoodList[6],
+      breakfast: await fetchFoodById(dayMenu.breakfastId),
+      lunch: await fetchFoodById(dayMenu.lunchId),
+      dinner: await fetchFoodById(dayMenu.dinnerId),
+      dayOfWeek: dayOfWeeks[index],
     };
-  }
+  });
+
+  return {
+    sundayFood: await dayMenuWithFoodList[0],
+    mondayFood: await dayMenuWithFoodList[1],
+    tuesdayFood: await dayMenuWithFoodList[2],
+    wednesdayFood: await dayMenuWithFoodList[3],
+    thursdayFood: await dayMenuWithFoodList[4],
+    fridayFood: await dayMenuWithFoodList[5],
+    saturdayFood: await dayMenuWithFoodList[6],
+  };
 };
 
 export const fetchTodayMenuWithFood = async (
   userId: string
-): Promise<DayMenuWithFood | undefined> => {
-  const myMenu: MyMenuWithFood | undefined = await fetchMyMenuWithFood(userId);
+): Promise<DayMenuWithFood | null> => {
+  const myMenu: MyMenuWithFood | null = await fetchMyMenuWithFood(userId);
   const today = new Date();
   const dayOfWeek: number = today.getDay();
 
-  if (myMenu) {
-    return Object.values(myMenu)[dayOfWeek];
-  }
+  if (!myMenu) return null;
+
+  return Object.values(myMenu)[dayOfWeek];
 };

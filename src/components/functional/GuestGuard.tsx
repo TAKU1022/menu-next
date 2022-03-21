@@ -7,8 +7,8 @@ type Props = {
 };
 
 export const GuestGuard: VFC<Props> = ({ children }) => {
-  const router = useRouter();
   const { firebaseUser } = useUser();
+  const router = useRouter();
 
   useEffect(() => {
     if (firebaseUser) {
