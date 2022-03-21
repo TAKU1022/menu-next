@@ -17,8 +17,8 @@ export const HomePage: VFC<Props> = ({ todayMenu }) => {
 
   const dayAlt = (index: number) => {
     if (index === 0) return '朝ごはん';
-    if (index === 1) return '昼ごはん';
-    if (index === 2) return '夜ごはん';
+    else if (index === 1) return '昼ごはん';
+    else if (index === 2) return '夜ごはん';
   };
 
   const isEaten = (index: number) => {
