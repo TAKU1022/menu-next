@@ -31,7 +31,7 @@ export const fetchFoodById = async (foodId: string): Promise<Food> => {
 };
 
 export const fetchFoodList = async (
-  foodId: string | undefined
+  foodId: string | null
 ): Promise<{ foodList: Food[]; lastFoodId: string }> => {
   const perPage = 24;
 

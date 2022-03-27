@@ -18,7 +18,7 @@ const FoodList: NextPage<Props> = ({ foodList, lastFoodId }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { foodList, lastFoodId } = await fetchFoodList(undefined);
+  const { foodList, lastFoodId } = await fetchFoodList(null);
 
   return {
     props: { foodList, lastFoodId },
