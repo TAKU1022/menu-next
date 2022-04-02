@@ -1,13 +1,13 @@
 import { NextPage } from 'next';
 import { CommonLayout } from 'src/components/layout/CommonLayout';
-import { WeekMenuPage } from 'src/components/page/WeekMenuPage';
+import { EditMyMenuPage } from 'src/components/page/EditPage';
 
-const WeekMenu: NextPage = () => {
+const EditMyMenu: NextPage = () => {
   return (
     <CommonLayout>
-      <WeekMenuPage />
+      <EditMyMenuPage />
     </CommonLayout>
   );
 };
 
-export default WeekMenu;
+export default EditMyMenu;

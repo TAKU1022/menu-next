@@ -14,7 +14,7 @@ import {
 
 export const CommonHeader: VFC = () => {
   const router = useRouter();
-  const { userState } = useUser();
+  const { firebaseUser, user } = useUser();
   const { signOut } = useUser();
 
   const navigatePage = (path: string) => {
@@ -37,88 +37,99 @@ export const CommonHeader: VFC = () => {
             </a>
           </Link>
         </div>
-        <div css={header__linkContent}>
-          <Link href={'/'} passHref>
-            <a css={linkHome}>
-              <img src="/images/icons/home-icon.png" alt="ホーム画面へ" />
-            </a>
-          </Link>
-          <Link href={'/week_menu'} passHref>
-            <a css={linkWeekMenu}>
-              <img src="/images/icons/menu-icon.png" alt="一週間の献立画面へ" />
-            </a>
-          </Link>
-          <Link href={'/food_list'} passHref>
-            <a css={linkFoodList}>
-              <img
-                src="/images/icons/food-list-icon.png"
-                alt="メニュー一覧画面へ"
-              />
-            </a>
-          </Link>
-          <Link href={'/post_list'} passHref>
-            <a css={linkPost}>
-              <img src="/images/icons/post-icon.png" alt="みんなの献立画面へ" />
-            </a>
-          </Link>
-          <Link href={'/search'} passHref>
-            <a css={linkSearch}>
-              <img src="/images/icons/search-icon.png" alt="検索画面へ" />
-            </a>
-          </Link>
-          <div css={userAvatarContent}>
-            <Menu isLazy={true}>
-              <MenuButton css={userAvatarButton}>
-                {userState ? (
-                  <img
-                    css={userAvatar}
-                    src={userState.avaterURL}
-                    alt="ユーザーのアバター"
-                  />
-                ) : (
-                  <SkeletonCircle size="10" isLoaded={!userState} />
-                )}
-              </MenuButton>
-              <MenuList>
-                <MenuItem py={3} onClick={() => navigatePage('/my_page')}>
-                  <img
-                    css={menuIcon}
-                    src="/images/icons/mypage-icon.png"
-                    alt="マイページへ"
-                  />
-                  <span css={menuText}>マイページ</span>
-                </MenuItem>
-                <MenuItem py={3} onClick={() => navigatePage('/edit_my_menu')}>
-                  <img
-                    css={menuIconEdit}
-                    src="/images/icons/edit-icon.png"
-                    alt="My献立を編集画面へ"
-                  />
-                  <span css={menuText}>My献立を編集</span>
-                </MenuItem>
-                <MenuItem
-                  py={3}
-                  onClick={() => navigatePage('/setting/account')}
-                >
-                  <img
-                    css={menuIcon}
-                    src="/images/icons/setting-icon.png"
-                    alt="設定画面へ"
-                  />
-                  <span css={menuText}>設定</span>
-                </MenuItem>
-                <MenuItem py={3} onClick={signOut}>
-                  <img
-                    css={menuIcon}
-                    src="/images/icons/logout-icon.png"
-                    alt="設定画面へ"
-                  />
-                  <span css={menuText}>ログアウト</span>
-                </MenuItem>
-              </MenuList>
-            </Menu>
+        {firebaseUser && (
+          <div css={header__linkContent}>
+            <Link href={'/'} passHref>
+              <a css={linkHome}>
+                <img src="/images/icons/home-icon.png" alt="ホーム画面へ" />
+              </a>
+            </Link>
+            <Link href={'/week_menu'} passHref>
+              <a css={linkWeekMenu}>
+                <img
+                  src="/images/icons/menu-icon.png"
+                  alt="一週間の献立画面へ"
+                />
+              </a>
+            </Link>
+            <Link href={'/food_list'} passHref>
+              <a css={linkFoodList}>
+                <img
+                  src="/images/icons/food-list-icon.png"
+                  alt="メニュー一覧画面へ"
+                />
+              </a>
+            </Link>
+            <Link href={'/post_list'} passHref>
+              <a css={linkPost}>
+                <img
+                  src="/images/icons/post-icon.png"
+                  alt="みんなの献立画面へ"
+                />
+              </a>
+            </Link>
+            <Link href={'/search'} passHref>
+              <a css={linkSearch}>
+                <img src="/images/icons/search-icon.png" alt="検索画面へ" />
+              </a>
+            </Link>
+            <div css={userAvatarContent}>
+              <Menu isLazy={true}>
+                <MenuButton css={userAvatarButton}>
+                  {user ? (
+                    <img
+                      css={userAvatar}
+                      src={user.avaterURL}
+                      alt="ユーザーのアバター"
+                    />
+                  ) : (
+                    <SkeletonCircle size="10" isLoaded={!user} />
+                  )}
+                </MenuButton>
+                <MenuList>
+                  <MenuItem py={3} onClick={() => navigatePage('/my_page')}>
+                    <img
+                      css={menuIcon}
+                      src="/images/icons/mypage-icon.png"
+                      alt="マイページへ"
+                    />
+                    <span css={menuText}>マイページ</span>
+                  </MenuItem>
+                  <MenuItem
+                    py={3}
+                    onClick={() => navigatePage('/edit_my_menu')}
+                  >
+                    <img
+                      css={menuIconEdit}
+                      src="/images/icons/edit-icon.png"
+                      alt="My献立を編集画面へ"
+                    />
+                    <span css={menuText}>My献立を編集</span>
+                  </MenuItem>
+                  <MenuItem
+                    py={3}
+                    onClick={() => navigatePage('/setting/account')}
+                  >
+                    <img
+                      css={menuIcon}
+                      src="/images/icons/setting-icon.png"
+                      alt="設定画面へ"
+                    />
+                    <span css={menuText}>設定</span>
+                  </MenuItem>
+                  <MenuItem py={3} onClick={signOut}>
+                    <img
+                      css={menuIcon}
+                      src="/images/icons/logout-icon.png"
+                      alt="設定画面へ"
+                    />
+                    <span css={menuText}>ログアウト</span>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </header>
   );

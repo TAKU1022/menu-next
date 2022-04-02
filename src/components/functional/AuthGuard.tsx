@@ -1,19 +1,14 @@
-import { ReactNode, useEffect, VFC } from 'react';
+import { ReactNode, VFC } from 'react';
 import { useUser } from 'src/hooks/useUser';
-import { initialUserState } from '../context/user/UserProvider';
 
 type Props = {
   children: ReactNode;
 };
 
 export const AuthGuard: VFC<Props> = ({ children }) => {
-  const { userState, listenUserState } = useUser();
+  const { firebaseUser } = useUser();
 
-  useEffect(() => {
-    if (userState === initialUserState) {
-      listenUserState();
-    }
-  }, [userState, listenUserState]);
+  if (!firebaseUser) return null;
 
-  return userState === initialUserState ? <></> : <>{children}</>;
+  return <>{children}</>;
 };

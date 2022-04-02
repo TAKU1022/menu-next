@@ -21,6 +21,7 @@ export const FoodListPage: VFC<Props> = ({ foodList, lastFoodId }) => {
 
   const fetchMoreData = () => {
     updateIsLoading((prevState) => !prevState);
+
     setTimeout(() => {
       fetchFoodList(foodId).then((data) => {
         updateFoods((prevState) => [...prevState, ...data.foodList]);
@@ -40,13 +41,13 @@ export const FoodListPage: VFC<Props> = ({ foodList, lastFoodId }) => {
 
   return (
     <Container>
+      <img
+        src="/images/titles/food-list-title.png"
+        alt="メニュー一覧"
+        css={title}
+      />
       <WoodBackground>
         <div css={root}>
-          <img
-            src="/images/titles/food-list-title.png"
-            alt="メニュー一覧"
-            css={title}
-          />
           <InfiniteScroll
             dataLength={foods.length}
             next={fetchMoreData}

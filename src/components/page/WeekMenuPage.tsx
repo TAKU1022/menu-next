@@ -1,16 +1,27 @@
-import { VFC } from 'react';
+import { useEffect, useState, VFC } from 'react';
 import { css } from '@emotion/react';
 import { rgba } from 'emotion-rgba';
 import { DayMenuWithFood, MyMenuWithFood } from '@/types/typeMyMenu';
 import { FoodPhotoCard } from '../UIkit/FoodPhotoCard';
+import { fetchMyMenuWithFood } from 'src/firebase/db/myMenu';
+import { useUser } from 'src/hooks/useUser';
 
-type Props = {
-  myMenu: MyMenuWithFood | undefined;
-};
+export const WeekMenuPage: VFC = () => {
+  const [myMenu, updateMyMenu] = useState<MyMenuWithFood | null>(null);
+  const { user } = useUser();
 
-export const WeekMenuPage: VFC<Props> = ({ myMenu }) => {
   const rotateType = (index: number) =>
     (index + 1) % 2 === 0 ? rotateEvenType : rotateOddType;
+
+  useEffect(() => {
+    if (user) {
+      fetchMyMenuWithFood(user.uid).then(
+        (myMenuData: MyMenuWithFood | null) => {
+          updateMyMenu(myMenuData);
+        }
+      );
+    }
+  }, [user]);
 
   return (
     <div css={container}>

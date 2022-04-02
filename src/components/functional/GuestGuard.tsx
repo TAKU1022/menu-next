@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { ReactNode, useEffect, VFC } from 'react';
 import { useUser } from 'src/hooks/useUser';
 
@@ -6,11 +7,16 @@ type Props = {
 };
 
 export const GuestGuard: VFC<Props> = ({ children }) => {
-  const { listenGuestState } = useUser();
+  const { firebaseUser } = useUser();
+  const router = useRouter();
 
   useEffect(() => {
-    listenGuestState();
-  }, [listenGuestState]);
+    if (firebaseUser) {
+      router.push('/');
+    }
+  }, [firebaseUser, router]);
+
+  if (firebaseUser) return null;
 
   return <>{children}</>;
 };

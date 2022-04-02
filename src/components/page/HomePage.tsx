@@ -1,5 +1,5 @@
 import { DayMenuWithFood } from '@/types/typeMyMenu';
-import { VFC } from 'react';
+import { useEffect, useState, VFC } from 'react';
 import { css } from '@emotion/react';
 import { rgba } from 'emotion-rgba';
 import { Food } from '@/types/typeFood';
@@ -7,25 +7,35 @@ import Link from 'next/link';
 import { PrimaryButton } from '../UIkit/PrimaryButton';
 import { MdFindReplace, MdCheckCircleOutline, MdUndo } from 'react-icons/md';
 import { useUser } from 'src/hooks/useUser';
+import { fetchTodayMenuWithFood } from 'src/firebase/db/myMenu';
 
-type Props = {
-  todayMenu: DayMenuWithFood | undefined;
-};
-
-export const HomePage: VFC<Props> = ({ todayMenu }) => {
-  const { userState } = useUser();
+export const HomePage: VFC = () => {
+  const [todayMenu, updateTodayMenu] = useState<DayMenuWithFood | null>(null);
+  const { user } = useUser();
 
   const dayAlt = (index: number) => {
     if (index === 0) return '朝ごはん';
-    if (index === 1) return '昼ごはん';
-    if (index === 2) return '夜ごはん';
+    else if (index === 1) return '昼ごはん';
+    else if (index === 2) return '夜ごはん';
   };
 
   const isEaten = (index: number) => {
-    if (index === 0) return userState.isEatenBreakfast;
-    if (index === 1) return userState.isEatenLunch;
-    if (index === 2) return userState.isEatenDinner;
+    if (!user) return null;
+
+    if (index === 0) return user.isEatenBreakfast;
+    else if (index === 1) return user.isEatenLunch;
+    else if (index === 2) return user.isEatenDinner;
   };
+
+  useEffect(() => {
+    if (user) {
+      fetchTodayMenuWithFood(user.uid).then(
+        (menuData: DayMenuWithFood | null) => {
+          updateTodayMenu(menuData);
+        }
+      );
+    }
+  }, [user]);
 
   return (
     <div css={container}>

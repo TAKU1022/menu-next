@@ -1,36 +1,72 @@
-import { createContext, Dispatch, ReactNode, useReducer, VFC } from 'react';
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useState,
+  VFC,
+} from 'react';
 import { User } from '@/types/typeUser';
-import { UserAction, userReducer } from './reducer';
+import firebase from 'firebase/app';
+import { auth, db } from 'src/firebase';
+import { userConverter } from 'src/firebase/db/user';
+import { useRouter } from 'next/router';
 
 type Context = {
-  userState: User;
-  dispatch: Dispatch<UserAction>;
+  firebaseUser: firebase.User | null;
+  updateFirebaseUser: Dispatch<SetStateAction<firebase.User | null>>;
+  user: User | null;
+  updateUser: Dispatch<SetStateAction<User | null>>;
 };
 
 type Props = {
   children: ReactNode;
 };
 
-export const initialUserState: User = {
-  uid: '',
-  admin: false,
-  eatCount: 0,
-  isEatenBreakfast: false,
-  isEatenLunch: false,
-  isEatenDinner: false,
-  isCompletedHomeTutorial: false,
-  isCompletedCreateMyMenuTutorial: false,
-  isCreatedMyMenu: false,
-  postCount: 0,
-};
-
 export const UserContext = createContext<Context | undefined>(undefined);
 
 export const UserProvider: VFC<Props> = ({ children }) => {
-  const [userState, dispatch] = useReducer(userReducer, initialUserState);
+  const [firebaseUser, updateFirebaseUser] = useState<firebase.User | null>(
+    null
+  );
+  const [user, updateUser] = useState<User | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    let unsubscribeUser: firebase.Unsubscribe;
+    const unsubscribeAuth = auth.onAuthStateChanged(
+      (firebaseUserData: firebase.User | null) => {
+        if (firebaseUserData) {
+          const uid = firebaseUserData.uid;
+
+          unsubscribeUser = db
+            .collection('users')
+            .withConverter(userConverter)
+            .doc(uid)
+            .onSnapshot((snapshot) => {
+              updateUser(snapshot.data() || null);
+              firebaseUserData.getIdToken(true);
+            });
+        } else {
+          router.push('/sign_in');
+          updateUser(null);
+        }
+
+        updateFirebaseUser(firebaseUserData);
+      }
+    );
+
+    return () => {
+      unsubscribeAuth();
+      unsubscribeUser();
+    };
+  }, []);
 
   return (
-    <UserContext.Provider value={{ userState, dispatch }}>
+    <UserContext.Provider
+      value={{ firebaseUser, updateFirebaseUser, user, updateUser }}
+    >
       {children}
     </UserContext.Provider>
   );
