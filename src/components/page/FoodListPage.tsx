@@ -91,13 +91,6 @@ export const FoodListPage: VFC<Props> = ({ foodList, lastFoodId }) => {
   );
 };
 
-const root = css`
-  padding: 48px 32px 56px;
-  @media screen and (max-width: 450px) {
-    padding: 32px 24px 40px;
-  }
-`;
-
 const title = css`
   margin: 0 auto 48px;
   @media screen and (max-width: 600px) {
@@ -106,6 +99,13 @@ const title = css`
   }
   @media screen and (max-width: 320px) {
     width: 90%;
+  }
+`;
+
+const root = css`
+  padding: 48px 32px 56px;
+  @media screen and (max-width: 450px) {
+    padding: 32px 24px 40px;
   }
 `;
 

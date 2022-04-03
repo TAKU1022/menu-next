@@ -2,7 +2,7 @@ import { useEffect, useState, VFC } from 'react';
 import { css } from '@emotion/react';
 import { rgba } from 'emotion-rgba';
 import { DayMenuWithFood, MyMenuWithFood } from '@/types/typeMyMenu';
-import { FoodPhotoCard } from '../UIkit/FoodPhotoCard';
+import { PrimaryFoodPhotoCard } from '../UIkit/PrimaryFoodPhotoCard';
 import { fetchMyMenuWithFood } from 'src/firebase/db/myMenu';
 import { useUser } from 'src/hooks/useUser';
 
@@ -38,13 +38,22 @@ export const WeekMenuPage: VFC = () => {
                 />
                 <div css={menuGrid}>
                   <div css={rotateType(index).breakfast}>
-                    <FoodPhotoCard foodData={dayMenu.breakfast} />
+                    <PrimaryFoodPhotoCard
+                      foodData={dayMenu.breakfast}
+                      timeNumber={0}
+                    />
                   </div>
                   <div css={rotateType(index).lunch}>
-                    <FoodPhotoCard foodData={dayMenu.lunch} />
+                    <PrimaryFoodPhotoCard
+                      foodData={dayMenu.lunch}
+                      timeNumber={1}
+                    />
                   </div>
                   <div css={rotateType(index).dinner}>
-                    <FoodPhotoCard foodData={dayMenu.dinner} />
+                    <PrimaryFoodPhotoCard
+                      foodData={dayMenu.dinner}
+                      timeNumber={2}
+                    />
                   </div>
                 </div>
               </div>

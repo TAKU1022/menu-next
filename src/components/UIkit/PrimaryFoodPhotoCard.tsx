@@ -6,9 +6,20 @@ import Link from 'next/link';
 
 type Props = {
   foodData: Food;
+  timeNumber?: number;
 };
 
-export const FoodPhotoCard: VFC<Props> = ({ foodData }) => {
+export const PrimaryFoodPhotoCard: VFC<Props> = ({ foodData, timeNumber }) => {
+  const dayTime = (index: number): { ja: string; en: string } | undefined => {
+    if (index === 0) {
+      return { ja: '朝', en: 'morning' };
+    } else if (index === 1) {
+      return { ja: '昼', en: 'noon' };
+    } else if (index === 2) {
+      return { ja: '夜', en: 'night' };
+    }
+  };
+
   return (
     <Link
       href={`/food_list/[slug]`}
@@ -20,7 +31,15 @@ export const FoodPhotoCard: VFC<Props> = ({ foodData }) => {
         <div
           style={{ backgroundImage: `url(${foodData.image})` }}
           css={food__image}
-        ></div>
+        >
+          {timeNumber !== undefined && (
+            <img
+              src={`/images/icons/${dayTime(timeNumber)?.en}-icon.png`}
+              alt={`${dayTime(timeNumber)?.ja}のアイコン`}
+              css={food__timeIcon}
+            />
+          )}
+        </div>
         <p css={food__name}>{foodData.name}</p>
       </a>
     </Link>
@@ -90,6 +109,15 @@ const food__image = css`
   padding-bottom: 56.25%;
   border-radius: 5px;
   position: relative;
+`;
+
+const food__timeIcon = css`
+  position: absolute;
+  bottom: -3%;
+  left: -1%;
+  width: 20%;
+  border-radius: 50%;
+  box-shadow: 4px 4px 0 0 ${rgba('#000', 0.3)};
 `;
 
 const food__name = css`
