@@ -8,7 +8,7 @@ type Props = {
   foodData: Food;
 };
 
-export const FoodPhotoCard: VFC<Props> = ({ foodData }) => {
+export const PrimaryFoodPhotoCard: VFC<Props> = ({ foodData }) => {
   return (
     <Link
       href={`/food_list/[slug]`}
