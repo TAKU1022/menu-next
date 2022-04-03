@@ -12,6 +12,16 @@ export const EditMyMenuPage: VFC = () => {
   const [myMenu, updateMyMenu] = useState<MyMenuWithFood | null>(null);
   const { user } = useUser();
 
+  const dayTime = (index: number): { ja: string; en: string } | undefined => {
+    if (index === 0) {
+      return { ja: '朝', en: 'morning' };
+    } else if (index === 1) {
+      return { ja: '昼', en: 'noon' };
+    } else if (index === 2) {
+      return { ja: '夜', en: 'night' };
+    }
+  };
+
   useEffect(() => {
     if (user) {
       fetchMyMenuWithFood(user.uid).then(
@@ -66,16 +76,10 @@ export const EditMyMenuPage: VFC = () => {
                               css={food__image}
                             >
                               <img
-                                src={`/images/icons/${((i: number) => {
-                                  if (i === 0) {
-                                    return 'morning';
-                                  } else if (i === 1) {
-                                    return 'noon';
-                                  } else if (i === 2) {
-                                    return 'night';
-                                  }
-                                })(index)}-icon.png`}
-                                alt="夜のアイコン"
+                                src={`/images/icons/${
+                                  dayTime(index)?.en
+                                }-icon.png`}
+                                alt={`${dayTime(index)?.ja}のアイコン`}
                                 css={food__timeIcon}
                               />
                             </div>

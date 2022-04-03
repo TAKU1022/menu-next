@@ -38,13 +38,22 @@ export const WeekMenuPage: VFC = () => {
                 />
                 <div css={menuGrid}>
                   <div css={rotateType(index).breakfast}>
-                    <PrimaryFoodPhotoCard foodData={dayMenu.breakfast} />
+                    <PrimaryFoodPhotoCard
+                      foodData={dayMenu.breakfast}
+                      timeNumber={0}
+                    />
                   </div>
                   <div css={rotateType(index).lunch}>
-                    <PrimaryFoodPhotoCard foodData={dayMenu.lunch} />
+                    <PrimaryFoodPhotoCard
+                      foodData={dayMenu.lunch}
+                      timeNumber={1}
+                    />
                   </div>
                   <div css={rotateType(index).dinner}>
-                    <PrimaryFoodPhotoCard foodData={dayMenu.dinner} />
+                    <PrimaryFoodPhotoCard
+                      foodData={dayMenu.dinner}
+                      timeNumber={2}
+                    />
                   </div>
                 </div>
               </div>
